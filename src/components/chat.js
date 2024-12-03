@@ -13,6 +13,10 @@ export default function GmailStyleChat() {
     setMenuOpen(false);
   };
 
+  const closeChat = () => {
+    setActiveChat(null);
+  };
+
   const sendMessage = () => {
     if (currentMessage.trim() || selectedFile) {
       setMessages((prev) => ({
@@ -23,7 +27,7 @@ export default function GmailStyleChat() {
         ],
       }));
       setCurrentMessage('');
-      setSelectedFile(null); // Reset the file after sending the message
+      setSelectedFile(null);
     }
   };
 
@@ -59,8 +63,11 @@ export default function GmailStyleChat() {
 
       {/* Chat Window */}
       {activeChat && (
-        <div className={styles.chatWindow}>
-          <div className={styles.chatHeader}>Welcome to Chat {activeChat}</div>
+        <div className={`${styles.chatWindow} ${styles.open}`}>
+          <div className={styles.chatHeader}>
+            <span>Welcome to Chat {activeChat}</span>
+            <button onClick={closeChat} className={styles.closeButton}>×</button>
+          </div>
           <div className={styles.chatMessages}>
             {messages[activeChat].map((msg, index) => (
               <div key={index} className={styles.message}>
