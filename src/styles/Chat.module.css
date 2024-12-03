@@ -1,0 +1,164 @@
+/* General */
+.container {
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  background: #f2f2f2; /* Light background */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Header */
+.header {
+  background: #f25c05; /* Primary color */
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.menuIcon {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Side Menu */
+.sideMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 250px;
+  height: 100%;
+  background: #f2b591; /* Chat tag container */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px; /* Add padding at the top */
+}
+
+.sideMenu.open {
+  left: 0;
+}
+
+.chatItem {
+  padding: 15px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f2f2f2; /* Divider */
+  background: #f27405; /* Secondary */
+  color: white;
+  transition: background 0.2s ease;
+}
+
+.chatItem:hover {
+  background: #3e5159; /* Highlight */
+}
+
+/* Active chat tag */
+.chatItem.active {
+  background: #3e5159; /* New color for active chat tags */
+  color: white;
+}
+
+/* Chat Window */
+.chatWindow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+.chatHeader {
+  background: #3e5159; /* Primary color */
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.message {
+  background: #f2b591; /* Chat bubble */
+  margin: 5px 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #3e5159; /* Text color */
+  max-width: 80%;
+}
+
+/* Input */
+.inputArea {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background: #f2f2f2; /* Light background */
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.sendButton {
+  background: #f25c05; /* Primary button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sendButton:hover {
+  background: #f27405; /* Secondary */
+}
+
+/* File Input */
+.fileInput {
+  display: none; /* Hide the file input button */
+}
+
+/* File input visible button */
+.fileInputLabel {
+  background: #f25c05; /* Primary button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background 0.3s ease;
+}
+
+.fileInputLabel:hover {
+  background: #f27405; /* Secondary */
+}
+
+/* File Info (to show file name below the message) */
+.fileInfo {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #3e5159;
+  font-weight: bold;
+}
