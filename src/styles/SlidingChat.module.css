@@ -4,7 +4,7 @@
   flex-direction: column;
   height: 100%;
   max-height: 90vh;
-  border: 1px solid #dfdfdf; /* Light Gray */
+  border: 1px solid #E3F2FD; /* Light Gray */
   border-radius: 8px;
   background-color: #ffffff; /* White Background */
   margin: 10px;
@@ -19,11 +19,12 @@
   background-color: #ffffff; /* White Background */
   font-size: 14px;
   word-wrap: break-word;
+  color: #0D47A1;
 }
 
 .message {
   background-color: #dfdfdf; /* Light Gray Background */
-  color: #3e5159; /* Dark Gray-Blue Text */
+  color: #0D47A1; /* Dark Gray-Blue Text */
   padding: 8px;
   margin-bottom: 10px;
   border-radius: 4px;
@@ -35,7 +36,7 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #dfdfdf; /* Light Gray */
+  background-color: #E3F2FD; /* Light Gray */
   border-top: 1px solid #cccccc;
 }
 
@@ -43,7 +44,7 @@
 .inputField {
   flex: 1;
   padding: 8px;
-  border: 1px solid #cccccc;
+  border: 1px solid #90CAF9;
   border-radius: 4px;
   font-size: 14px;
 }
@@ -52,7 +53,7 @@
 .sendButton {
   margin-left: 10px;
   padding: 8px 12px;
-  background-color: #363795; /* Primary Theme Color */
+  background-color: #1976D2; /* Primary Theme Color */
   color: white;
   border: none;
   border-radius: 4px;
@@ -62,12 +63,12 @@
 }
 
 .sendButton:hover {
-  background-color: #36d1dc; /* Hover Effect - Light Cyan */
+  background-color: #1565C0; /* Hover Effect - Light Cyan */
 }
 
 /* File Upload Link */
 .fileLink {
-  color: #3e5159; /* Dark Gray-Blue */
+  color: #1976D2; /* Dark Gray-Blue */
   text-decoration: underline;
   margin: 5px 0;
   display: block;

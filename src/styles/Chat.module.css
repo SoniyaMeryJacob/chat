@@ -2,13 +2,14 @@
 .homeContainer {
   display: flex;
   height: 100vh;
-  background-color: #ffffff; /* White */
+  background-color: #F8F9FA; /* White */
 }
 
 /* Left Section */
 .leftSection {
   flex: 2; /* Takes 2/3 of screen */
   background-color: #ffffff; /* White */
+  border-right: 2px solid #E0E0E0;
 }
 
 /* Right Section */
@@ -17,8 +18,8 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #36d1dc; /* Light Cyan */
-  color: #363795; /* Dark Blue */
+  background-color: #dfdfdf; /* Light Cyan */
+  color: #0A0A0A; /* Dark Blue */
 }
 
 /* Header for BOTS */
@@ -26,9 +27,9 @@
   text-align: center;
   font-size: 1.5em;
   margin-bottom: 20px;
-  border-bottom: 2px solid #dfdfdf; /* Light Gray */
+  border-bottom: 2px solid #0d6efd; /* Light Gray */
   padding-bottom: 10px;
-  color: #363795; /* Dark Blue */
+  color: #008FD5; /* Dark Blue */
 }
 
 /* Individual Bot Container */
@@ -41,7 +42,7 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: #363795; /* Dark Blue */
+  background-color: #03A9F4; /* Dark Blue */
   color: #ffffff; /* White */
   border-radius: 4px;
   cursor: pointer;
@@ -50,22 +51,21 @@
 }
 
 .botHeader:hover {
-  background-color: #36d1dc; /* Light Cyan on Hover */
-  color: #363795; /* Dark Blue Text */
+  background-color: #0288D1; /* Light Cyan on Hover */
 }
 
 /* Dropdown Icon */
 .dropdownIcon {
   font-size: 14px;
+  color: #D9F1FF; 
 }
 
 /* Chat Box Container */
 .chatBox {
-  background-color: #ffffff; /* White */
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #FFFFFF;
+  border: 1px solid #dfdfdf; /* Light Blue Border */
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
-  padding: 10px;
-  color: #363795; /* Dark Blue */
-  border: 1px solid #dfdfdf; /* Light Gray Border */
+  overflow: hidden;
 }
