@@ -2,23 +2,23 @@
 .homeContainer {
   display: flex;
   height: 100vh;
-  background-color: #F2F2F2; /* Light Gray */
+  background-color: #ffffff; /* White */
 }
 
 /* Left Section */
 .leftSection {
-  flex: 2; /* Takes 2/3 of the screen */
-  background-color: #FFFFFF; /* Pure White */
+  flex: 2; /* Takes 2/3 of screen */
+  background-color: #ffffff; /* White */
 }
 
 /* Right Section */
 .rightSection {
-  flex: 1; /* Takes 1/3 of the screen */
+  flex: 1; /* Takes 1/3 of screen */
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #3E5159; /* Dark Gray-Blue */
-  color: white;
+  background-color: #36d1dc; /* Light Cyan */
+  color: #363795; /* Dark Blue */
 }
 
 /* Header for BOTS */
@@ -26,8 +26,9 @@
   text-align: center;
   font-size: 1.5em;
   margin-bottom: 20px;
-  border-bottom: 2px solid #F25C05; /* Bright Orange-Red */
+  border-bottom: 2px solid #dfdfdf; /* Light Gray */
   padding-bottom: 10px;
+  color: #363795; /* Dark Blue */
 }
 
 /* Individual Bot Container */
@@ -40,16 +41,17 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: #F27405; /* Vivid Orange */
-  color: white;
+  background-color: #363795; /* Dark Blue */
+  color: #ffffff; /* White */
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .botHeader:hover {
-  background-color: #D14E04; /* Darker Orange */
+  background-color: #36d1dc; /* Light Cyan on Hover */
+  color: #363795; /* Dark Blue Text */
 }
 
 /* Dropdown Icon */
@@ -59,19 +61,11 @@
 
 /* Chat Box Container */
 .chatBox {
-  background-color: #FFFFFF; /* White */
-  border: 1px solid #F2B591; /* Peach Border */
+  background-color: #ffffff; /* White */
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 10px;
-}
-
-/* Message Box */
-.messageBox {
   padding: 10px;
-  font-size: 1em;
-  color: #3E5159; /* Dark Gray-Blue */
-  background-color: #F2F2F2; /* Light Gray */
-  border-radius: 4px;
-  margin: 5px 0;
+  color: #363795; /* Dark Blue */
+  border: 1px solid #dfdfdf; /* Light Gray Border */
 }

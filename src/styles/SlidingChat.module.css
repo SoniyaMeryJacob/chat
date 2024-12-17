@@ -1,36 +1,33 @@
-/* Main Chat Container */
+/* Chat Container */
 .chatContainer {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Adjust to fit the viewport height */
-  max-height: 90vh; /* Prevent overflow on mobile screens */
-  border: 1px solid #F2B591; /* Soft peach border */
+  height: 100%;
+  max-height: 90vh;
+  border: 1px solid #dfdfdf; /* Light Gray */
   border-radius: 8px;
-  background-color: #F2F2F2; /* Light gray background */
-  margin: 10px; /* Add spacing */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+  background-color: #ffffff; /* White Background */
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Chat Box - Messages Area */
+/* Chat Box for Messages */
 .chatBox {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background-color: #FFFFFF; /* White background for clarity */
+  background-color: #ffffff; /* White Background */
   font-size: 14px;
-  color: #3E5159; /* Dark gray-blue text */
-  word-wrap: break-word; /* Prevent overflow */
+  word-wrap: break-word;
 }
 
-/* Individual Message */
 .message {
-  background-color: #F2B591; /* Peach background */
-  color: #3E5159; /* Dark gray-blue text */
-  padding: 8px 12px;
+  background-color: #dfdfdf; /* Light Gray Background */
+  color: #3e5159; /* Dark Gray-Blue Text */
+  padding: 8px;
   margin-bottom: 10px;
   border-radius: 4px;
   text-align: left;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add slight shadow */
 }
 
 /* Input Area */
@@ -38,26 +35,25 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #F2F2F2; /* Light gray */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  background-color: #dfdfdf; /* Light Gray */
+  border-top: 1px solid #cccccc;
 }
 
 /* Input Field */
 .inputField {
   flex: 1;
   padding: 8px;
-  border: 1px solid #F2B591; /* Peach border */
+  border: 1px solid #cccccc;
   border-radius: 4px;
   font-size: 14px;
-  color: #3E5159; /* Dark gray-blue text */
 }
 
 /* Send Button */
 .sendButton {
   margin-left: 10px;
   padding: 8px 12px;
-  background-color: #F25C05; /* Bright orange-red */
-  color: #FFFFFF; /* White text */
+  background-color: #363795; /* Primary Theme Color */
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -66,55 +62,53 @@
 }
 
 .sendButton:hover {
-  background-color: #D14E04; /* Darker orange-red */
+  background-color: #36d1dc; /* Hover Effect - Light Cyan */
 }
 
-/* File Upload Input */
-.fileUpload {
-  margin-left: 10px;
-  color: #3E5159; /* Dark gray-blue */
-}
-
-/* File Link */
+/* File Upload Link */
 .fileLink {
-  color: #3E5159; /* Dark gray-blue */
+  color: #3e5159; /* Dark Gray-Blue */
   text-decoration: underline;
   margin: 5px 0;
   display: block;
+}
+
+.fileUpload {
+  margin-left: 10px;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .chatContainer {
     margin: 5px;
-    height: 80vh; /* Adjust height */
+    height: 80vh;
   }
 
   .chatBox {
     padding: 8px;
-    font-size: 13px; /* Smaller font for mobile */
+    font-size: 13px;
   }
 
   .inputArea {
     padding: 8px;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
     align-items: stretch;
   }
 
   .inputField {
     margin-bottom: 10px;
-    font-size: 12px; /* Adjust font size */
+    font-size: 12px;
   }
 
   .sendButton {
     margin-left: 0;
     padding: 10px;
     font-size: 12px;
-    width: 100%; /* Full-width button */
+    width: 100%;
   }
 
   .fileUpload {
     margin-left: 0;
-    margin-top: 10px; /* Spacing on smaller screens */
+    margin-top: 10px;
   }
 }
