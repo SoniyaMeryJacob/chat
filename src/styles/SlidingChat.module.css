@@ -1,112 +1,120 @@
+/* Main Chat Container */
 .chatContainer {
   display: flex;
   flex-direction: column;
   height: 100%; /* Adjust to fit the viewport height */
   max-height: 90vh; /* Prevent overflow on mobile screens */
-  border: 1px solid #ccc;
+  border: 1px solid #F2B591; /* Soft peach border */
   border-radius: 8px;
-  background-color: #f2f2f2;
-  margin: 10px; /* Add some margin for spacing */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for better visibility */
+  background-color: #F2F2F2; /* Light gray background */
+  margin: 10px; /* Add spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
 }
 
+/* Chat Box - Messages Area */
 .chatBox {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background-color: #fff;
-  font-size: 14px; /* Adjust font size for smaller screens */
-  word-wrap: break-word; /* Prevent text overflow */
+  background-color: #FFFFFF; /* White background for clarity */
+  font-size: 14px;
+  color: #3E5159; /* Dark gray-blue text */
+  word-wrap: break-word; /* Prevent overflow */
 }
 
+/* Individual Message */
 .message {
-  background-color: #f2b591;
-  color: #3e5159;
-  padding: 8px;
+  background-color: #F2B591; /* Peach background */
+  color: #3E5159; /* Dark gray-blue text */
+  padding: 8px 12px;
   margin-bottom: 10px;
   border-radius: 4px;
   text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add slight shadow */
 }
 
+/* Input Area */
 .inputArea {
   display: flex;
+  align-items: center;
   padding: 10px;
-  background-color: #f2f2f2;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  background-color: #F2F2F2; /* Light gray */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
+/* Input Field */
 .inputField {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #F2B591; /* Peach border */
   border-radius: 4px;
-  font-size: 14px; /* Adjust font size */
+  font-size: 14px;
+  color: #3E5159; /* Dark gray-blue text */
 }
 
+/* Send Button */
 .sendButton {
   margin-left: 10px;
   padding: 8px 12px;
-  background-color: #f25c05;
-  color: white;
+  background-color: #F25C05; /* Bright orange-red */
+  color: #FFFFFF; /* White text */
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 14px; /* Adjust button text size */
+  font-size: 14px;
 }
 
 .sendButton:hover {
-  background-color: #d14e04;
+  background-color: #D14E04; /* Darker orange-red */
 }
 
+/* File Upload Input */
+.fileUpload {
+  margin-left: 10px;
+  color: #3E5159; /* Dark gray-blue */
+}
+
+/* File Link */
 .fileLink {
-  color: #3e5159;
+  color: #3E5159; /* Dark gray-blue */
   text-decoration: underline;
   margin: 5px 0;
   display: block;
 }
 
-.fileUpload {
-  margin-left: 10px;
-}
-
-.inputArea {
-  display: flex;
-  align-items: center;
-}
-
-/* Responsive adjustments for smaller screens */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .chatContainer {
-    margin: 5px; /* Reduce margin for smaller screens */
+    margin: 5px;
     height: 80vh; /* Adjust height */
   }
 
   .chatBox {
-    padding: 8px; /* Reduce padding */
-    font-size: 13px; /* Smaller text for readability */
+    padding: 8px;
+    font-size: 13px; /* Smaller font for mobile */
   }
 
   .inputArea {
-    padding: 8px; /* Reduce padding */
-    flex-direction: column; /* Stack inputs vertically */
-    align-items: stretch; /* Stretch inputs to full width */
+    padding: 8px;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: stretch;
   }
 
   .inputField {
-    margin-bottom: 10px; /* Add spacing between input and button */
-    font-size: 12px; /* Adjust font size for smaller screens */
+    margin-bottom: 10px;
+    font-size: 12px; /* Adjust font size */
   }
 
   .sendButton {
-    margin-left: 0; /* Remove margin for stacked layout */
+    margin-left: 0;
     padding: 10px;
-    font-size: 12px; /* Adjust text size */
-    width: 100%; /* Full-width button on mobile */
+    font-size: 12px;
+    width: 100%; /* Full-width button */
   }
 
   .fileUpload {
-    margin-left: 0; /* Align with mobile design */
-    margin-top: 10px; /* Add spacing for better layout */
+    margin-left: 0;
+    margin-top: 10px; /* Spacing on smaller screens */
   }
 }
