@@ -1,38 +1,47 @@
 
+/* Chat Container */
 .chatContainer {
   display: flex;
   flex-direction: column;
   height: 100%;
   max-height: 90vh;
-  border: 1px solid #dfdfdf; /* Light Gray */
+  border: 1px solid #BCE0FD; /* Light Gray */
   border-radius: 8px;
   background-color: #E3F2FD; /* White Background */
   margin: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}/* Main Container */
-.homeContainer {
+}
+
+/* Chat Box for Messages */
+.chatBox {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #dfdfdf; /* White Background */
+  font-size: 14px;
+  word-wrap: break-word;
+  color: #0D47A1;
+}
+
+.message {
+  background-color: #ffffff80; /* Light Gray Background */
+  color: #0D47A1; /* Dark Gray-Blue Text */
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  text-align: left;
+}
+
+/* Input Area */
+.inputArea {
   display: flex;
-  height: 100vh;
-  background-color: #F8F9FA; /* White */
+  align-items: center;
+  padding: 10px;
+  background-color: #E3F2FD; /* Light Gray */
+  border-top: 1px solid #90CAF9;
 }
 
-/* Left Section */
-.leftSection {
-  flex: 2; /* Takes 2/3 of screen */
-  background-color: #ffffff; /* White */
-  border-right: 2px solid #E0E0E0;
-}
-
-/* Right Section */
-.rightSection {
-  flex: 1; /* Takes 1/3 of screen */
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: #dfdfdf; /* Light Cyan */
-  color: #0A0A0A; /* Dark Blue */
-}
-
+/* Input Field */
 .inputField {
   flex: 1;
   padding: 8px;
@@ -42,11 +51,13 @@
   background-color: #FFFFFF; /* White */
   color: #0D47A1;
 }
+
 /* Send Button */
 .sendButton {
   margin-left: 10px;
   padding: 8px 12px;
-  background: #64B5F6;   color: white;
+  background: #64B5F6;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -69,64 +80,153 @@
 .fileUpload {
   margin-left: 10px;
 }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .chatContainer {
+    margin: 5px;
+    height: 80vh;
+  }
+
+  .chatBox {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .inputArea {
+    padding: 8px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inputField {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .sendButton {
+    margin-left: 0;
+    padding: 10px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .fileUpload {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+/* Main Container */
+.homeContainer {
+  display: flex;
+  height: 100vh;
+  background-color: #F8F9FA; /* Light Gray */
+}
+
+/* Left Section */
+.leftSection {
+  flex: 2;
+  background-color: #E3F2FD; /* Pure White */
+  border-right: 2px solid #03A9F4; /* Subtle Divider */
+}
+
+/* Right Section */
+.rightSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #dfdfdf; /* Light Sky Blue */
+  color: #0A0A0A; /* Dark text for readability */
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
 /* Header for BOTS */
 .botsHeader {
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.8em;
+  font-weight: bold;
   margin-bottom: 20px;
-  border-bottom: 2px solid #0d6efd; /* Light Gray */
+  color: #008FD5; /* Bright Blue */
+  border-bottom: 3px solid #0d6efd; /* Blue Border */
   padding-bottom: 10px;
-  color: #008FD5; /* Dark Blue */
+  letter-spacing: 1px;
 }
 
 /* Individual Bot Container */
 .botContainer {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 /* Bot Header */
 .botHeader {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #03A9F4; /* Dark Blue */
-  color: #ffffff; /* White */
-  border-radius: 4px;
+  align-items: center;
+  padding: 12px;
+  background-color: #03A9F4; /* Primary Blue */
+  color: white;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .botHeader:hover {
-  background-color: #0288D1; /* Light Cyan on Hover */
+  background-color: #0288D1; /* Darker Blue */
+  transform: translateY(-2px);
 }
 
 /* Dropdown Icon */
 .dropdownIcon {
-  font-size: 14px;
-  color: #D9F1FF; 
+  font-size: 16px;
+  color: #D9F1FF; /* Light Blue */
 }
 
 /* Chat Box Container */
 .chatBox {
-  color: #0D47A1;
   background-color: #FFFFFF;
-  border: 1px solid #dfdfdf; /* Light Blue Border */
+  border: 1px solid #BCE0FD; /* Light Blue Border */
   border-radius: 6px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
-  overflow: hidden;
 }
-.message {
-  background-color: #F0F8FF; /* Light Gray Background */
-  color: #0D47A1; /* Dark Gray-Blue Text */
-  padding: 8px;
+
+/* Message Box */
+.messageBox {
+  padding: 12px;
+  font-size: 1em;
+  color: #3E5159; /* Dark Gray */
+  background-color: #f4fcf6; /* Very Light Blue */
+  border-radius: 6px;
+  margin: 8px 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  word-wrap: break-word;
+}
+
+/* Alternate Message Styling */
+.messageBox:nth-child(even) {
+  background-color: #EAF5FF; /* Slightly darker light blue */
+}
+
+.frameHeading {
+  font-size: 1.8em;
+  font-weight: bold;
   margin-bottom: 10px;
-  border-radius: 4px;
-  text-align: left;
+  color: #0D47A1; /* Dark blue */
+  text-align: center;
 }
+
+.frameBody {
+  font-size: 1.2em;
+  color: #0288D1; /* Dark Gray */
+  text-align: left;
+  white-space: pre-wrap; /* Preserve line breaks */
+}
+
 .frame {
-  background-color: #E3F2FD; /* Light blue background for consistency */
+  background-color: white; /* Light blue background for consistency */
   padding: 20px;
   border-radius: 8px;
   font-size: 16px;
@@ -142,3 +242,16 @@
   flex-direction: column;
   animation: fadeIn 0.8s ease-in-out; /* Smooth animation */
 }
+
+/* Optional: Fade-in animation for the frame */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

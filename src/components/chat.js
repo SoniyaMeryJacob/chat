@@ -5,23 +5,20 @@ export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState({});
-  const [frameContent, setFrameContent] = useState(''); // New state for left frame content
+  const [frameContent, setFrameContent] = useState(null); // Updated to handle heading and body
 
   // Function to toggle open bots
   const toggleBot = (bot) => {
     setOpenBot(openBot === bot ? null : bot);
     if (openBot === bot) {
-      setFrameContent(''); // Reset frame content when closing the chat
+      setFrameContent(null); // Reset frame content when closing the chat
     } else {
-      const welcomeMessage = `Welcome to Chat ${bot}`;
+      const heading = `Welcome to Chat ${bot}`;
       const botMessages = messages[bot] || [];
-      const messageContent = [
-        welcomeMessage,
-        ...botMessages.map((msg, index) =>
-          msg.text ? msg.text : `File: ${msg.fileName}`
-        ),
-      ].join('\n');
-      setFrameContent(messageContent); // Update frame content with bot messages
+      const body = botMessages
+        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+        .join('\n');
+      setFrameContent({ heading, body }); // Update frame content with heading and body
     }
   };
 
@@ -29,11 +26,24 @@ export default function HomePage() {
   const handleSendMessage = (bot) => {
     if (input[bot]?.trim()) {
       const newMessage = { text: input[bot] };
-      setMessages({
+
+      // Update the messages state
+      const updatedMessages = {
         ...messages,
         [bot]: [...(messages[bot] || []), newMessage],
-      });
+      };
+      setMessages(updatedMessages);
+
+      // Update the input state
       setInput({ ...input, [bot]: '' });
+
+      // Update the frame content
+      const heading = `Welcome to Chat ${bot}`;
+      const botMessages = updatedMessages[bot];
+      const body = botMessages
+        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+        .join('\n');
+      setFrameContent({ heading, body });
     }
   };
 
@@ -52,10 +62,19 @@ export default function HomePage() {
         .then((data) => {
           if (data.success && data.fileUrl) {
             const newMessage = { fileName: data.fileUrl };
-            setMessages({
+            const updatedMessages = {
               ...messages,
               [bot]: [...(messages[bot] || []), newMessage],
-            });
+            };
+            setMessages(updatedMessages);
+
+            // Update the frame content
+            const heading = `Welcome to Chat ${bot}`;
+            const botMessages = updatedMessages[bot];
+            const body = botMessages
+              .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+              .join('\n');
+            setFrameContent({ heading, body });
           }
         })
         .catch((error) => {
@@ -68,7 +87,12 @@ export default function HomePage() {
     <div className={styles.homeContainer}>
       {/* Left Section with dynamic frame content */}
       <div className={styles.leftSection}>
-        {frameContent && <div className={styles.frame}>{frameContent}</div>} {/* Display the frame content */}
+        {frameContent && (
+          <div className={styles.frame}>
+            <h2 className={styles.frameHeading}>{frameContent.heading}</h2>
+            <p className={styles.frameBody}>{frameContent.body}</p>
+          </div>
+        )}
       </div>
 
       {/* Right Section */}
