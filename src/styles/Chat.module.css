@@ -214,13 +214,13 @@
   font-size: 1.8em;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #0D47A1; /* Dark blue */
+  color: #0288D1; /* Dark blue */
   text-align: center;
 }
 
 .frameBody {
   font-size: 1.2em;
-  color: #0288D1; /* Dark Gray */
+  color: #3E5159; /* Dark Gray */
   text-align: left;
   white-space: pre-wrap; /* Preserve line breaks */
 }
