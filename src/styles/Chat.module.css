@@ -21,6 +21,8 @@
   font-size: 14px;
   word-wrap: break-word;
   color: #0D47A1;
+  max-height: 70vh; /* Limit chat box height */
+  overflow-y: auto; /* Add scroll for long messages */
 }
 
 /* Message */
@@ -41,6 +43,7 @@
   background-color: #E3F2FD; /* Light Gray */
   border-top: 1px solid #90CAF9;
   gap: 10px;
+  justify-content: space-between;
 }
 
 /* Input Field */
@@ -104,6 +107,7 @@
     padding: 10px;
     flex-direction: column;
     align-items: stretch;
+    gap: 5px;
   }
 
   .inputField {
@@ -122,6 +126,16 @@
     margin-left: 0;
     margin-top: 10px;
   }
+
+  /* Adjust chat container padding */
+  .chatContainer {
+    padding: 5px;
+  }
+
+  /* Adjust chat box for mobile */
+  .chatBox {
+    font-size: 12px;
+  }
 }
 
 /* Main Container */
@@ -133,6 +147,7 @@
   gap: 20px; /* Gap between sections */
   padding: 20px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Left Section */
@@ -205,6 +220,8 @@
   border-radius: 6px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  overflow-y: auto;
+  max-height: 70vh; /* Adjust chatbox height */
 }
 
 /* Message Box */
@@ -224,6 +241,7 @@
   background-color: #EAF5FF; /* Slightly darker light blue */
 }
 
+/* Frame Heading */
 .frameHeading {
   font-size: 1.8em;
   font-weight: bold;
@@ -255,7 +273,6 @@
 }
 
 /* Frame Body */
-/* Frame Body */
 .frameBody {
   font-size: 1.2em;
   color: #3E5159; /* Dark Gray for readability */
@@ -278,7 +295,7 @@
   color: #0288D1; /* Change text color to a darker blue on hover */
 }
 
-
+/* Fade-in animation for the frame */
 .frame {
   background-color: white; /* Light blue background for consistency */
   padding: 20px;
