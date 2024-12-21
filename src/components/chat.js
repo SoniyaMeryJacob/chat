@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styles from '../styles/Chat.module.css';
 
+
 export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState({});
-  const [frameContent, setFrameContent] = useState(null); // Updated to handle heading and body
+  const [frameContent, setFrameContent] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false); // New state for expanding/collapsing text
+
 
   // Function to toggle open bots
   const toggleBot = (bot) => {
@@ -18,14 +21,16 @@ export default function HomePage() {
       const body = botMessages
         .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
         .join('\n');
-      setFrameContent({ heading, body }); // Update frame content with heading and body
+      setFrameContent({ heading, body });
     }
   };
+
 
   // Function to handle sending a message
   const handleSendMessage = (bot) => {
     if (input[bot]?.trim()) {
       const newMessage = { text: input[bot] };
+
 
       // Update the messages state
       const updatedMessages = {
@@ -34,8 +39,10 @@ export default function HomePage() {
       };
       setMessages(updatedMessages);
 
+
       // Update the input state
       setInput({ ...input, [bot]: '' });
+
 
       // Update the frame content
       const heading = `Welcome to Chat ${bot}`;
@@ -47,12 +54,14 @@ export default function HomePage() {
     }
   };
 
+
   // Function to handle file upload
   const handleFileUpload = (bot, event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
+
 
       fetch('/api/upload', {
         method: 'POST',
@@ -67,6 +76,7 @@ export default function HomePage() {
               [bot]: [...(messages[bot] || []), newMessage],
             };
             setMessages(updatedMessages);
+
 
             // Update the frame content
             const heading = `Welcome to Chat ${bot}`;
@@ -83,6 +93,13 @@ export default function HomePage() {
     }
   };
 
+
+  // Toggle expand/collapse of frame body content
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+
   return (
     <div className={styles.homeContainer}>
       {/* Left Section with dynamic frame content */}
@@ -90,14 +107,21 @@ export default function HomePage() {
         {frameContent && (
           <div className={styles.frame}>
             <h2 className={styles.frameHeading}>{frameContent.heading}</h2>
-            <p className={styles.frameBody}>{frameContent.body}</p>
+            <div className={styles.dropdownContainer}>
+              <button className={styles.expandButton} onClick={toggleExpand}>
+                {isExpanded ? '▲' : '▼ show messages'}
+              </button>
+              {isExpanded && <p className={styles.frameBody}>{frameContent.body}</p>}
+            </div>
           </div>
         )}
       </div>
 
+
       {/* Right Section */}
       <div className={styles.rightSection}>
         <h2 className={styles.botsHeader}>BOTS</h2>
+
 
         {/* Bot List */}
         {[1, 2, 3].map((bot) => (
@@ -108,6 +132,7 @@ export default function HomePage() {
                 {openBot === bot ? '▲' : '▼'}
               </span>
             </div>
+
 
             {/* Chat Box */}
             {openBot === bot && (
@@ -162,3 +187,9 @@ export default function HomePage() {
     </div>
   );
 }
+
+
+
+
+
+
