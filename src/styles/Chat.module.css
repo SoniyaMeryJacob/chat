@@ -9,9 +9,7 @@
   background-color: #E3F2FD; /* White Background */
   margin: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Ensures no overflow outside container */
 }
-
 /* Chat Box for Messages */
 .chatBox {
   flex: 1;
@@ -147,7 +145,6 @@
   gap: 20px; /* Gap between sections */
   padding: 20px;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 /* Left Section */
@@ -275,7 +272,6 @@
 /* Frame Body */
 .frameBody {
   font-size: 1.2em;
-  color: #3E5159; /* Dark Gray for readability */
   text-align: left;
   white-space: pre-wrap; /* Preserve line breaks */
   overflow-wrap: break-word; /* Break long words */
@@ -287,11 +283,6 @@
   background-color: #fdfdfd; /* Very light background color for subtle contrast */
   border-radius: 6px; /* Rounded corners for a softer look */
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
-}
-
-.frameBody:hover {
-  background-color: #E3F2FD; /* Light blue background on hover */
-  color: #0288D1; /* Change text color to a darker blue on hover */
 }
 
 /* Fade-in animation for the frame */

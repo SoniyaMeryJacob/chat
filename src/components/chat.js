@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import styles from '../styles/Chat.module.css';
 
-
 export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState({});
   const [frameContent, setFrameContent] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false); // New state for expanding/collapsing text
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  const colors = ['#0dcaf0','#454545']; // Define colors
+
+  // Sample Lorem Ipsum text
+  const loremIpsumText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget justo sit amet libero luctus interdum. Sed tincidunt, purus at luctus malesuada, urna justo pharetra erat, a tincidunt odio est a dui. Nam elementum, purus eget rhoncus condimentum, nunc metus tempor lectus, eu tempor libero nulla id dui. Donec in volutpat mi. Ut et mauris in lacus luctus feugiat a a lectus. Curabitur ac tristique justo.`;
 
   // Function to toggle open bots
   const toggleBot = (bot) => {
@@ -18,19 +21,14 @@ export default function HomePage() {
     } else {
       const heading = `Welcome to Chat ${bot}`;
       const botMessages = messages[bot] || [];
-      const body = botMessages
-        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
-        .join('\n');
-      setFrameContent({ heading, body });
+      setFrameContent({ heading, body: botMessages });
     }
   };
-
 
   // Function to handle sending a message
   const handleSendMessage = (bot) => {
     if (input[bot]?.trim()) {
       const newMessage = { text: input[bot] };
-
 
       // Update the messages state
       const updatedMessages = {
@@ -39,21 +37,15 @@ export default function HomePage() {
       };
       setMessages(updatedMessages);
 
-
       // Update the input state
       setInput({ ...input, [bot]: '' });
-
 
       // Update the frame content
       const heading = `Welcome to Chat ${bot}`;
       const botMessages = updatedMessages[bot];
-      const body = botMessages
-        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
-        .join('\n');
-      setFrameContent({ heading, body });
+      setFrameContent({ heading, body: botMessages });
     }
   };
-
 
   // Function to handle file upload
   const handleFileUpload = (bot, event) => {
@@ -61,7 +53,6 @@ export default function HomePage() {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-
 
       fetch('/api/upload', {
         method: 'POST',
@@ -77,14 +68,10 @@ export default function HomePage() {
             };
             setMessages(updatedMessages);
 
-
             // Update the frame content
             const heading = `Welcome to Chat ${bot}`;
             const botMessages = updatedMessages[bot];
-            const body = botMessages
-              .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
-              .join('\n');
-            setFrameContent({ heading, body });
+            setFrameContent({ heading, body: botMessages });
           }
         })
         .catch((error) => {
@@ -93,12 +80,10 @@ export default function HomePage() {
     }
   };
 
-
   // Toggle expand/collapse of frame body content
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
-
 
   return (
     <div className={styles.homeContainer}>
@@ -111,17 +96,30 @@ export default function HomePage() {
               <button className={styles.expandButton} onClick={toggleExpand}>
                 {isExpanded ? '▲' : '▼ show messages'}
               </button>
-              {isExpanded && <p className={styles.frameBody}>{frameContent.body}</p>}
+              {isExpanded && (
+                <div className={styles.frameBody}>
+                  {frameContent.body.map((msg, index) => (
+                    <p
+                      key={index}
+                      style={{
+                        color: colors[index % colors.length], // Cycle through colors
+                      }}
+                    >
+                      {msg.text ? msg.text : `File: ${msg.fileName}`}
+                    </p>
+                  ))}
+                  {/* Sample Lorem Ipsum text */}
+                  <p>{loremIpsumText}</p>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
 
-
       {/* Right Section */}
       <div className={styles.rightSection}>
         <h2 className={styles.botsHeader}>BOTS</h2>
-
 
         {/* Bot List */}
         {[1, 2, 3].map((bot) => (
@@ -132,7 +130,6 @@ export default function HomePage() {
                 {openBot === bot ? '▲' : '▼'}
               </span>
             </div>
-
 
             {/* Chat Box */}
             {openBot === bot && (
@@ -187,9 +184,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-
-
-
-
-
