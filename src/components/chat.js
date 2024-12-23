@@ -6,22 +6,22 @@ export default function HomePage() {
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState({});
   const [frameContent, setFrameContent] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const colors = ['#0dcaf0','#454545']; // Define colors
-
-  // Sample Lorem Ipsum text
-  const loremIpsumText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget justo sit amet libero luctus interdum. Sed tincidunt, purus at luctus malesuada, urna justo pharetra erat, a tincidunt odio est a dui. Nam elementum, purus eget rhoncus condimentum, nunc metus tempor lectus, eu tempor libero nulla id dui. Donec in volutpat mi. Ut et mauris in lacus luctus feugiat a a lectus. Curabitur ac tristique justo.`;
+  const [activeToggle, setActiveToggle] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false); // State for expand/collapse
+  const [isSecondExpanded, setIsSecondExpanded] = useState(false); // State for second expandable field
 
   // Function to toggle open bots
   const toggleBot = (bot) => {
     setOpenBot(openBot === bot ? null : bot);
     if (openBot === bot) {
-      setFrameContent(null); // Reset frame content when closing the chat
+      setFrameContent(null);
     } else {
       const heading = `Welcome to Chat ${bot}`;
       const botMessages = messages[bot] || [];
-      setFrameContent({ heading, body: botMessages });
+      const body = botMessages
+        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+        .join('\n');
+      setFrameContent({ heading, body });
     }
   };
 
@@ -30,20 +30,28 @@ export default function HomePage() {
     if (input[bot]?.trim()) {
       const newMessage = { text: input[bot] };
 
-      // Update the messages state
       const updatedMessages = {
         ...messages,
         [bot]: [...(messages[bot] || []), newMessage],
       };
       setMessages(updatedMessages);
 
-      // Update the input state
       setInput({ ...input, [bot]: '' });
 
-      // Update the frame content
       const heading = `Welcome to Chat ${bot}`;
       const botMessages = updatedMessages[bot];
-      setFrameContent({ heading, body: botMessages });
+      const body = botMessages
+        .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+        .join('\n');
+      setFrameContent({ heading, body });
+
+      // Display the messages in the first expandable button
+      if (openBot === bot) {
+        const newBody = botMessages
+          .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+          .join('\n');
+        setFrameContent({ heading, body: newBody });
+      }
     }
   };
 
@@ -68,10 +76,20 @@ export default function HomePage() {
             };
             setMessages(updatedMessages);
 
-            // Update the frame content
             const heading = `Welcome to Chat ${bot}`;
             const botMessages = updatedMessages[bot];
-            setFrameContent({ heading, body: botMessages });
+            const body = botMessages
+              .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+              .join('\n');
+            setFrameContent({ heading, body });
+
+            // Update the first expandable section with the new file message
+            if (openBot === bot) {
+              const newBody = botMessages
+                .map((msg) => (msg.text ? msg.text : `File: ${msg.fileName}`))
+                .join('\n');
+              setFrameContent({ heading, body: newBody });
+            }
           }
         })
         .catch((error) => {
@@ -80,9 +98,18 @@ export default function HomePage() {
     }
   };
 
-  // Toggle expand/collapse of frame body content
-  const toggleExpand = () => {
+  // Handle toggle button state
+  const handleToggleClick = (toggle) => {
+    setActiveToggle(activeToggle === toggle ? null : toggle);
+  };
+
+  // Toggle expand/collapse for both sections
+  const handleExpandToggle = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleSecondExpandToggle = () => {
+    setIsSecondExpanded(!isSecondExpanded);
   };
 
   return (
@@ -92,26 +119,55 @@ export default function HomePage() {
         {frameContent && (
           <div className={styles.frame}>
             <h2 className={styles.frameHeading}>{frameContent.heading}</h2>
-            <div className={styles.dropdownContainer}>
-              <button className={styles.expandButton} onClick={toggleExpand}>
-                {isExpanded ? '▲' : '▼ show messages'}
-              </button>
-              {isExpanded && (
-                <div className={styles.frameBody}>
-                  {frameContent.body.map((msg, index) => (
-                    <p
-                      key={index}
-                      style={{
-                        color: colors[index % colors.length], // Cycle through colors
-                      }}
-                    >
-                      {msg.text ? msg.text : `File: ${msg.fileName}`}
-                    </p>
-                  ))}
-                  {/* Sample Lorem Ipsum text */}
-                  <p>{loremIpsumText}</p>
-                </div>
-              )}
+            <p className={styles.frameBody}>
+              {isExpanded
+                ? frameContent.body || "Pellentesque a purus rhoncus, interdum metus in, hendrerit purus. Cras fermentum elit quis ante feugiat, at tempus justo ullamcorper. Duis rhoncus orci in dui vulputate viverra. Ut congue dictum imperdiet. Quisque gravida mattis egestas. Integer vehicula lobortis orci a hendrerit. Morbi sed turpis accumsan, bibendum augue ut, scelerisque dolor. Ut porttitor diam eu nisi faucibus maximus. Aenean nec tincidunt massa."
+                : ''}
+            </p>
+
+            {/* Add a text entry field in the frameBody */}
+            <input
+              type="text"
+              className={styles.textEntryField}
+              placeholder="Enter text here..."
+            />
+
+            {/* Expand/Collapse Button for first section */}
+            <button
+              className={styles.expandButton}
+              onClick={handleExpandToggle}
+            >
+              {isExpanded ? 'Collapse' : 'Expand'}
+            </button>
+
+            {/* Expand/Collapse Button for second section (empty content) */}
+            <button
+              className={styles.expandButton}
+              onClick={handleSecondExpandToggle}
+            >
+              {isSecondExpanded ? 'Collapse Second' : 'Expand Second'}
+            </button>
+
+            {/* Second expandable content (empty initially) */}
+            {isSecondExpanded && (
+              <div className={styles.secondExpandableField}>
+                {/* This is where additional content can be added later */}
+              </div>
+            )}
+
+            {/* Toggle Buttons */}
+            <div className={styles.toggleButtonsContainer}>
+              {['Option 1', 'Option 2', 'Option 3'].map((option, index) => (
+                <button
+                  key={index}
+                  className={`${styles.toggleButton} ${
+                    activeToggle === option ? styles.activeToggle : ''
+                  }`}
+                  onClick={() => handleToggleClick(option)}
+                >
+                  {option}
+                </button>
+              ))}
             </div>
           </div>
         )}

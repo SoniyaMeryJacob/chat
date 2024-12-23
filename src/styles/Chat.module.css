@@ -254,20 +254,6 @@
   align-items: flex-start;
 }
 
-/* Expand Button */
-.expandButton {
-  background: none;
-  border: none;
-  color: #5b86e5;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-.expandButton:hover {
-  color: #0288D1; /* Hover Effect */
-}
 
 /* Frame Body */
 .frameBody {
@@ -314,4 +300,71 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Toggle Button Container */
+.toggleButtonsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* Toggle Button */
+.toggleButton {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 2px solid #448bdb; /* Dark blue border */
+  border-radius: 4px;
+  background-color: #ffffff; /* White background */
+  color: #448bdb; /* Dark blue text */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggleButton.active {
+  background-color: #448bdb; /* Dark blue background */
+  color: #ffffff; /* White text */
+}
+
+.toggleButton:hover {
+  background-color: #225a9e; /* Slightly darker blue for hover */
+  color: #ffffff; /* White text */
+}
+.expandButton {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.expandButton:hover {
+  background-color: #0056b3;
+}
+.textEntryField {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.textEntryField:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.secondExpandableField {
+  background-color: #e2e2e2;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
 }
