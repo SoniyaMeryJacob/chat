@@ -145,7 +145,7 @@ export default function HomePage() {
               className={styles.expandButton}
               onClick={handleSecondExpandToggle}
             >
-              {isSecondExpanded ? 'Collapse Second' : 'Expand Second'}
+              {isSecondExpanded ? 'Collapse' : 'Expand'}
             </button>
 
             {/* Second expandable content (empty initially) */}
@@ -157,7 +157,7 @@ export default function HomePage() {
 
             {/* Toggle Buttons */}
             <div className={styles.toggleButtonsContainer}>
-              {['Option 1', 'Option 2', 'Option 3'].map((option, index) => (
+              {['Toggle 1', 'Toggle 2', 'Toggle 3'].map((option, index) => (
                 <button
                   key={index}
                   className={`${styles.toggleButton} ${
