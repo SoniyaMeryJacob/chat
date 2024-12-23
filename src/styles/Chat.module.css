@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   padding: 15px;
-  background-color: #E3F2FD; /* Light Gray */
+  background-color: rgba(68, 139, 219, 0.15); /* Light Gray */
   border-top: 1px solid #90CAF9;
   gap: 10px;
   justify-content: space-between;
@@ -64,7 +64,7 @@
 /* Send Button */
 .sendButton {
   padding: 10px 15px;
-  background: #64B5F6;
+  background: #0d6efd;
   color: white;
   border: none;
   border-radius: 4px;
@@ -74,12 +74,12 @@
 }
 
 .sendButton:hover {
-  background-color: #1565C0; /* Hover Effect - Light Cyan */
+  background-color: #0b5ed7; /* Hover Effect - Light Cyan */
 }
 
 /* File Upload Link */
 .fileLink {
-  color: #1976D2; /* Dark Gray-Blue */
+  color: #0d6efd; /* Dark Gray-Blue */
   text-decoration: underline;
   margin: 5px 0;
   display: block;
@@ -243,7 +243,7 @@
   font-size: 1.8em;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #0288D1; /* Dark blue */
+  color: #448bdb; /* Dark blue */
   text-align: center;
 }
 
@@ -258,7 +258,7 @@
 .expandButton {
   background: none;
   border: none;
-  color: #0D47A1;
+  color: #5b86e5;
   font-size: 16px;
   cursor: pointer;
   padding: 5px;
