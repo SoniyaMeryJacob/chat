@@ -72,14 +72,14 @@ export default function HomePage() {
                       className={styles.expandButton}
                       onClick={() => handleExpandToggle(1)}
                     >
-                      Expand
-                    </button>
+                {isExpanded[1] ? 'Collapse' : 'Expand'}
+                </button>
                     <button
                       className={styles.expandButton}
                       onClick={() => handleSecondExpandToggle(1)}
                     >
-                      Expand
-                    </button>
+                {isSecondExpanded[1] ? 'Collapse' : 'Expand'}
+                </button>
                   </div>
 
                   {/* Expandable Content */}
@@ -150,7 +150,7 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(2)}
                   >
-                {isExpanded ? 'Collapse' : 'Expand'}
+                {isExpanded[2] ? 'Collapse' : 'Expand'}
                 </button>
 
                   {/* Expandable Content */}
@@ -206,7 +206,7 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(2)}
                   >
-                {isExpanded ? 'Collapse' : 'Expand'}
+                {isSecondExpanded[2] ? 'Collapse' : 'Expand'}
                 </button>
 
                   {/* Second Expandable Content */}
@@ -238,7 +238,7 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(3)}
                   >
-                {isExpanded ? 'Collapse' : 'Expand'}
+                {isExpanded[3] ? 'Collapse' : 'Expand'}
                 </button>
 
                   {/* Expandable Content */}
@@ -287,7 +287,7 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(3)}
                   >
-                {isExpanded ? 'Collapse' : 'Expand'}
+                {isSecondExpanded[3] ? 'Collapse' : 'Expand'}
                 </button>
 
                   {/* Second Expandable Content */}
