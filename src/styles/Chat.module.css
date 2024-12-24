@@ -1,3 +1,4 @@
+
 /* Chat Container */
 .chatContainer {
   display: flex;
@@ -210,6 +211,7 @@
   color: #D9F1FF; /* Light Blue */
 }
 
+
 /* Chat Box Container */
 .chatBox {
   background-color: #FFFFFF;
@@ -304,10 +306,11 @@
 
 /* Toggle Button Container */
 .toggleButtonsContainer {
-  display: flex;
+  display:inline-flex;
   justify-content: center;
   gap: 15px;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 /* Toggle Button */
@@ -331,8 +334,33 @@
   background-color: #225a9e; /* Slightly darker blue for hover */
   color: #ffffff; /* White text */
 }
+.expandContent {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.loremText {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.messageList {
+  margin-top: 10px;
+}
+
+.messageItem {
+  font-size: 14px;
+  color: #333;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
 .expandButton {
-  display: inline-block;
+  display:grid;
   padding: 8px 12px;
   font-size: 14px;
   color: #fff;
@@ -367,4 +395,111 @@
   border-radius: 4px;
   font-size: 14px;
   color: #333;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+.table td {
+  background-color: #fff;
+  color: #555;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table thead {
+  border-bottom: 2px solid #ddd;
+}
+
+/* Responsive table */
+@media (max-width: 600px) {
+  .table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+
+  .table thead {
+    display: none; /* Hide header on small screens */
+  }
+
+  .table tr {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .table td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+  }
+}
+
+/* Dynamic layouts */
+.layout1 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout1 .toggleButtonsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.layout2 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.layout2 .toggleButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.layout3 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout3 .toggleButtonsContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
 }
