@@ -6,8 +6,8 @@ export default function HomePage() {
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState({});
   const [activeToggle, setActiveToggle] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false); // State for expand/collapse
-  const [isSecondExpanded, setIsSecondExpanded] = useState(false); // State for second expandable field
+  const [isExpanded, setIsExpanded] = useState({}); // To manage expansion per bot
+  const [isSecondExpanded, setIsSecondExpanded] = useState({}); // To manage second expansion
 
   const layoutClasses = {
     1: styles.layout1,
@@ -35,12 +35,18 @@ export default function HomePage() {
     setActiveToggle(activeToggle === toggle ? null : toggle);
   };
 
-  const handleExpandToggle = () => {
-    setIsExpanded(!isExpanded);
+  const handleExpandToggle = (bot) => {
+    setIsExpanded({
+      ...isExpanded,
+      [bot]: !isExpanded[bot], // Toggle expand/collapse state per bot
+    });
   };
 
-  const handleSecondExpandToggle = () => {
-    setIsSecondExpanded(!isSecondExpanded);
+  const handleSecondExpandToggle = (bot) => {
+    setIsSecondExpanded({
+      ...isSecondExpanded,
+      [bot]: !isSecondExpanded[bot], // Toggle second expand/collapse state
+    });
   };
 
   return (
@@ -50,8 +56,8 @@ export default function HomePage() {
           <div className={`${styles.frame} ${layoutClasses[openBot]}`}>
             <h2 className={styles.frameHeading}>Welcome to Chat {openBot}</h2>
             <div className={styles.frameBody}>
-               {/* Chat 1 Specific UI */}
-               {openBot === 1 && (
+              {/* Chat 1 Specific UI */}
+              {openBot === 1 && (
                 <>
                   {/* Input Field */}
                   <input
@@ -64,18 +70,54 @@ export default function HomePage() {
                   <div className={styles.chat1Buttons}>
                     <button
                       className={styles.expandButton}
-                      onClick={handleExpandToggle}
+                      onClick={() => handleExpandToggle(1)}
                     >
                       Expand
                     </button>
                     <button
                       className={styles.expandButton}
-                      onClick={handleExpandToggle}
+                      onClick={() => handleSecondExpandToggle(1)}
                     >
                       Expand
                     </button>
                   </div>
 
+                  {/* Expandable Content */}
+                  {isExpanded[1] && (
+                    <div className={styles.expandContent}>
+                  {/* Static Lorem Ipsum Text */}
+                  <p className={styles.loremText}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim elit vel augue tempor, id sagittis dolor pharetra. Donec scelerisque urna a felis congue, in sodales justo suscipit.
+                  </p>
+
+                  {/* Dynamic Messages */}
+                  <div className={styles.messageList}>
+                    {(messages[openBot] || []).map((msg, index) => (
+                      <p key={index} className={styles.messageItem}>
+                        {msg.text || 'Uploaded File'}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                  )}
+                  {/* Second Expandable Content */}
+                  {isSecondExpanded[1] && (
+                    <div className={styles.secondExpandableField}>
+                      {/* Table with sample data */}
+                      <table className={styles.table}>
+                        <thead>
+                          <tr>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {/* Empty Body */}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                   {/* Toggle Buttons */}
                   <div className={styles.chat1Toggles}>
                     <button
@@ -100,16 +142,35 @@ export default function HomePage() {
                 </>
               )}
 
-               {/* Chat 2 UI */}
+              {/* Chat 2 UI */}
               {openBot === 2 && (
                 <>
                   {/* Expand Button */}
                   <button
                     className={styles.expandButton}
-                    onClick={handleExpandToggle}
+                    onClick={() => handleExpandToggle(2)}
                   >
                     Expand
                   </button>
+
+                  {/* Expandable Content */}
+                  {isExpanded[2] && (
+                    <div className={styles.expandContent}>
+                  {/* Static Lorem Ipsum Text */}
+                  <p className={styles.loremText}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim elit vel augue tempor, id sagittis dolor pharetra. Donec scelerisque urna a felis congue, in sodales justo suscipit.
+                  </p>
+
+                  {/* Dynamic Messages */}
+                  <div className={styles.messageList}>
+                    {(messages[openBot] || []).map((msg, index) => (
+                      <p key={index} className={styles.messageItem}>
+                        {msg.text || 'Uploaded File'}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                  )}
 
                   {/* Input Field */}
                   <input
@@ -143,23 +204,61 @@ export default function HomePage() {
                   {/* Second Expand Button */}
                   <button
                     className={styles.expandButton}
-                    onClick={handleSecondExpandToggle}
+                    onClick={() => handleSecondExpandToggle(2)}
                   >
                     Expand
                   </button>
+
+                  {/* Second Expandable Content */}
+                  {isSecondExpanded[2] && (
+                <div className={styles.secondExpandableField}>
+                {/* Empty Table */}
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Column 1</th>
+                      <th>Column 2</th>
+                      <th>Column 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Empty Body */}
+                  </tbody>
+                </table>
+              </div>
+                  )}
                 </>
               )}
 
-              {/* Generic UI for chat 3 */}
+              {/* Chat 3 UI */}
               {openBot === 3 && (
                 <>
                   {/* Expand Button */}
                   <button
                     className={styles.expandButton}
-                    onClick={handleExpandToggle}
+                    onClick={() => handleExpandToggle(3)}
                   >
                     Expand
                   </button>
+
+                  {/* Expandable Content */}
+                  {isExpanded[3] && (
+                    <div className={styles.expandContent}>
+                  {/* Static Lorem Ipsum Text */}
+                  <p className={styles.loremText}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim elit vel augue tempor, id sagittis dolor pharetra. Donec scelerisque urna a felis congue, in sodales justo suscipit.
+                  </p>
+
+                  {/* Dynamic Messages */}
+                  <div className={styles.messageList}>
+                    {(messages[openBot] || []).map((msg, index) => (
+                      <p key={index} className={styles.messageItem}>
+                        {msg.text || 'Uploaded File'}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                  )}
 
                   {/* Toggle Buttons in a Row */}
                   <div className={styles.toggleButtonsRow}>
@@ -186,10 +285,29 @@ export default function HomePage() {
                   {/* Second Expand Button */}
                   <button
                     className={styles.expandButton}
-                    onClick={handleExpandToggle}
+                    onClick={() => handleSecondExpandToggle(3)}
                   >
                     Expand
                   </button>
+
+                  {/* Second Expandable Content */}
+                  {isSecondExpanded[3] && (
+                <div className={styles.secondExpandableField}>
+                {/* Empty Table */}
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Column 1</th>
+                      <th>Column 2</th>
+                      <th>Column 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Empty Body */}
+                  </tbody>
+                </table>
+              </div>
+                  )}
 
                   {/* Input Field */}
                   <input
