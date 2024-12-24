@@ -94,8 +94,8 @@
 @media (max-width: 768px) {
   .chatContainer {
     margin: 5px;
-    height: 80vh;
-  }
+    height: auto;
+    max-height: none;  }
 
   .chatBox {
     padding: 10px;
@@ -104,21 +104,20 @@
 
   .inputArea {
     padding: 10px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 5px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
 
   .inputField {
-    margin-bottom: 12px;
+    margin-bottom: 0;
     font-size: 13px;
   }
 
   .sendButton {
-    width: 100%;
+    width: auto;
     padding: 12px;
     font-size: 14px;
-    margin-top: 5px;
   }
 
   .fileUpload {
