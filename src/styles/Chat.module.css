@@ -1,3 +1,86 @@
+/* Chat 3 Specific Styles */
+.toggleButtonsRow {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.toggleButton {
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.toggleButton:hover {
+  background-color: blue;
+  color: white;
+}
+
+.textEntryField {
+  margin-top: 10px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chat1Frame {
+  background-color: #f9f9f9; /* Example background for Chat 1 */
+}
+
+.chat1Buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.chat1Toggles {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+/* Chat 2 Specific Styles */
+.chat2FrameBody .expandButton {
+  background-color: blue;
+  color: white;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat2FrameBody .textEntryField {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chat2FrameBody .toggleButton {
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+  padding: 8px 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.chat2FrameBody .toggleButton:hover {
+  background-color: blue;
+  color: white;
+}
+
 
 /* Chat Container */
 .chatContainer {

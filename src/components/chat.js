@@ -9,19 +9,16 @@ export default function HomePage() {
   const [isExpanded, setIsExpanded] = useState(false); // State for expand/collapse
   const [isSecondExpanded, setIsSecondExpanded] = useState(false); // State for second expandable field
 
-  // Dynamic layout mapping
   const layoutClasses = {
     1: styles.layout1,
     2: styles.layout2,
     3: styles.layout3,
   };
 
-  // Function to toggle open bots
   const toggleBot = (bot) => {
     setOpenBot(openBot === bot ? null : bot);
   };
 
-  // Function to handle sending a message
   const handleSendMessage = (bot) => {
     if (input[bot]?.trim()) {
       const newMessage = { text: input[bot] };
@@ -34,12 +31,10 @@ export default function HomePage() {
     }
   };
 
-  // Handle toggle button state
   const handleToggleClick = (toggle) => {
     setActiveToggle(activeToggle === toggle ? null : toggle);
   };
 
-  // Toggle expand/collapse for both sections
   const handleExpandToggle = () => {
     setIsExpanded(!isExpanded);
   };
@@ -50,95 +45,167 @@ export default function HomePage() {
 
   return (
     <div className={styles.homeContainer}>
-      {/* Left Section with dynamic frame content */}
       <div className={styles.leftSection}>
         {openBot && (
           <div className={`${styles.frame} ${layoutClasses[openBot]}`}>
             <h2 className={styles.frameHeading}>Welcome to Chat {openBot}</h2>
             <div className={styles.frameBody}>
-              {/* Expand/Collapse Button for first section */}
-              <button
-                className={styles.expandButton}
-                onClick={handleExpandToggle}
-              >
-                {isExpanded ? 'Collapse' : 'Expand'}
-              </button>
+               {/* Chat 1 Specific UI */}
+               {openBot === 1 && (
+                <>
+                  {/* Input Field */}
+                  <input
+                    type="text"
+                    className={styles.textEntryField}
+                    placeholder="Enter text here..."
+                  />
 
-              {isExpanded && (
-                <div className={styles.expandContent}>
-                  {/* Static Lorem Ipsum Text */}
-                  <p className={styles.loremText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim elit vel augue tempor, id sagittis dolor pharetra. Donec scelerisque urna a felis congue, in sodales justo suscipit.
-                  </p>
-
-                  {/* Dynamic Messages */}
-                  <div className={styles.messageList}>
-                    {(messages[openBot] || []).map((msg, index) => (
-                      <p key={index} className={styles.messageItem}>
-                        {msg.text || 'Uploaded File'}
-                      </p>
-                    ))}
+                  {/* Expand/Collapse Buttons */}
+                  <div className={styles.chat1Buttons}>
+                    <button
+                      className={styles.expandButton}
+                      onClick={handleExpandToggle}
+                    >
+                      Expand
+                    </button>
+                    <button
+                      className={styles.expandButton}
+                      onClick={handleExpandToggle}
+                    >
+                      Expand
+                    </button>
                   </div>
-                </div>
+
+                  {/* Toggle Buttons */}
+                  <div className={styles.chat1Toggles}>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 1')}
+                    >
+                      Toggle 1
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 2')}
+                    >
+                      Toggle 2
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 3')}
+                    >
+                      Toggle 3
+                    </button>
+                  </div>
+                </>
               )}
 
-              {/* Toggle Buttons */}
-              <div className={styles.toggleButtonsContainer}>
-                {['Toggle 1', 'Toggle 2', 'Toggle 3'].map((option, index) => (
+               {/* Chat 2 UI */}
+              {openBot === 2 && (
+                <>
+                  {/* Expand Button */}
                   <button
-                    key={index}
-                    className={`${styles.toggleButton} ${
-                      activeToggle === option ? styles.activeToggle : ''
-                    }`}
-                    onClick={() => handleToggleClick(option)}
+                    className={styles.expandButton}
+                    onClick={handleExpandToggle}
                   >
-                    {option}
+                    Expand
                   </button>
-                ))}
-              </div>
 
-              {/* Expand/Collapse Button for second section */}
-              <button
-                className={styles.expandButton}
-                onClick={handleSecondExpandToggle}
-              >
-                {isSecondExpanded ? 'Collapse' : 'Expand'}
-              </button>
+                  {/* Input Field */}
+                  <input
+                    type="text"
+                    className={styles.textEntryField}
+                    placeholder="Enter text here..."
+                  />
 
-              {isSecondExpanded && (
-                <div className={styles.secondExpandableField}>
-                  {/* Empty Table */}
-                  <table className={styles.table}>
-                    <thead>
-                      <tr>
-                        <th>Column 1</th>
-                        <th>Column 2</th>
-                        <th>Column 3</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Empty Body */}
-                    </tbody>
-                  </table>
-                </div>
+                  {/* Toggle Buttons */}
+                  <div className={styles.toggleButtonsContainer}>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 1')}
+                    >
+                      Toggle 1
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 2')}
+                    >
+                      Toggle 2
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 3')}
+                    >
+                      Toggle 3
+                    </button>
+                  </div>
+
+                  {/* Second Expand Button */}
+                  <button
+                    className={styles.expandButton}
+                    onClick={handleSecondExpandToggle}
+                  >
+                    Expand
+                  </button>
+                </>
               )}
 
-              {/* Text entry field */}
-              <input
-                type="text"
-                className={styles.textEntryField}
-                placeholder="Enter text here..."
-              />
+              {/* Generic UI for chat 3 */}
+              {openBot === 3 && (
+                <>
+                  {/* Expand Button */}
+                  <button
+                    className={styles.expandButton}
+                    onClick={handleExpandToggle}
+                  >
+                    Expand
+                  </button>
+
+                  {/* Toggle Buttons in a Row */}
+                  <div className={styles.toggleButtonsRow}>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 1')}
+                    >
+                      Toggle 1
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 2')}
+                    >
+                      Toggle 2
+                    </button>
+                    <button
+                      className={styles.toggleButton}
+                      onClick={() => handleToggleClick('Toggle 3')}
+                    >
+                      Toggle 3
+                    </button>
+                  </div>
+
+                  {/* Second Expand Button */}
+                  <button
+                    className={styles.expandButton}
+                    onClick={handleExpandToggle}
+                  >
+                    Expand
+                  </button>
+
+                  {/* Input Field */}
+                  <input
+                    type="text"
+                    className={styles.textEntryField}
+                    placeholder="Enter text here..."
+                  />
+                </>
+              )}
             </div>
           </div>
         )}
       </div>
 
-      {/* Right Section */}
       <div className={styles.rightSection}>
         <h2 className={styles.botsHeader}>BOTS</h2>
-
-        {/* Bot List */}
         {[1, 2, 3].map((bot) => (
           <div key={bot} className={styles.botContainer}>
             <div className={styles.botHeader} onClick={() => toggleBot(bot)}>
@@ -148,7 +215,6 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Chat Box */}
             {openBot === bot && (
               <div className={styles.chatBox}>
                 <div className={styles.chatContainer}>
