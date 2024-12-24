@@ -402,8 +402,11 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  overflow-x: auto; /* Enable horizontal scroll */
+  display: block; /* Make table scrollable on smaller devices */
 }
 
+/* Table header and cells */
 .table th,
 .table td {
   padding: 12px;
@@ -430,41 +433,45 @@
   border-bottom: 2px solid #ddd;
 }
 
-/* Responsive table */
+/* Responsive table for small screens */
 @media (max-width: 600px) {
   .table {
-    width: 100%;
-    font-size: 14px;
+    display: block; /* Allow horizontal scrolling */
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent wrapping of text */
   }
 
+  /* Stacked layout for table rows */
   .table th,
   .table td {
-    padding: 8px;
+    display: block;
+    width: 100%;
+    text-align: right;
+    position: relative;
+    padding-left: 50%; /* Create space for row headers */
+    box-sizing: border-box;
+  }
+
+  .table th::before,
+  .table td::before {
+    content: attr(data-label); /* Use data-label attribute for row headers */
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 15px); /* Align row headers to the left */
+    font-weight: bold;
+    text-align: left;
   }
 
   .table thead {
-    display: none; /* Hide header on small screens */
+    display: none; /* Hide table headers on mobile */
   }
 
   .table tr {
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .table td {
-    display: block;
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-
-  .table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    font-weight: bold;
+    margin-bottom: 10px; /* Add spacing between rows */
+    border-bottom: 2px solid #ddd;
   }
 }
+
 
 /* Dynamic layouts */
 .layout1 .frameBody {
