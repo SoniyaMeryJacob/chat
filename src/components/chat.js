@@ -150,8 +150,8 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(2)}
                   >
-                    Expand
-                  </button>
+                {isExpanded ? 'Collapse' : 'Expand'}
+                </button>
 
                   {/* Expandable Content */}
                   {isExpanded[2] && (
@@ -206,8 +206,8 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(2)}
                   >
-                    Expand
-                  </button>
+                {isExpanded ? 'Collapse' : 'Expand'}
+                </button>
 
                   {/* Second Expandable Content */}
                   {isSecondExpanded[2] && (
@@ -238,8 +238,8 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(3)}
                   >
-                    Expand
-                  </button>
+                {isExpanded ? 'Collapse' : 'Expand'}
+                </button>
 
                   {/* Expandable Content */}
                   {isExpanded[3] && (
@@ -287,8 +287,8 @@ export default function HomePage() {
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(3)}
                   >
-                    Expand
-                  </button>
+                {isExpanded ? 'Collapse' : 'Expand'}
+                </button>
 
                   {/* Second Expandable Content */}
                   {isSecondExpanded[3] && (
