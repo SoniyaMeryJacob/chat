@@ -5,12 +5,6 @@
   margin: 10px 0;
 }
 
-.toggleSwitch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .toggleSwitch input {
   display: none;
 }
@@ -45,36 +39,14 @@ input:checked + .slider:before {
   transform: translateX(25px);
 }
 
-
-
-
-.toggleButton {
-  background-color: white;
-  color: blue;
-  border: 1px solid blue;
-  padding: 10px 20px;
-  margin: 0 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  flex-grow: 1;
-  text-align: center;
-}
-
-.toggleButton:hover {
-  background-color: blue;
-  color: white;
-}
-
 .textEntryField {
+  font-size: 14px;
+  box-sizing: border-box;
   margin-top: 10px;
   padding: 8px;
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.chat1Frame {
-  background-color: #f9f9f9; /* Example background for Chat 1 */
 }
 
 .chat1Buttons {
@@ -83,24 +55,22 @@ input:checked + .slider:before {
   margin: 10px 0;
 }
 
-.chat1Toggles {
-  display: flex;
-  justify-content: space-around;
-  margin: 10px 0;
-}
-
 .toggleSwitch {
+  background-color: #c4c4c4; /* Gray background */
+  text-align: center;
+  line-height: 25px;
+  font-size: 12px;
+  color: #ffffff; /* Text color */
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 50px;
   height: 25px;
-  background-color: #ccc; /* Default gray background */
   border-radius: 25px;
   position: relative;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.toggleSwitch.active {
-  background-color: #448bdb; /* Active blue background */
 }
 
 .toggleCircle {
@@ -138,25 +108,9 @@ input:checked + .slider:before {
   border-radius: 4px;
 }
 
-.chat2FrameBody .toggleButton {
-  background-color: white;
-  color: blue;
-  border: 1px solid blue;
-  padding: 8px 20px;
-  margin: 5px 0;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.chat2FrameBody .toggleButton:hover {
-  background-color: blue;
-  color: white;
-}
-
-
 /* Chat Container */
 .chatContainer {
+  padding: 5px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -169,11 +123,14 @@ input:checked + .slider:before {
 }
 /* Chat Box for Messages */
 .chatBox {
+  font-size: 12px;
+  border: 1px solid #BCE0FD; /* Light Blue Border */
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
   flex: 1;
   padding: 15px;
-  overflow-y: auto;
   background-color: #f9f9f9; /* Slightly lighter than default */
-  font-size: 14px;
   word-wrap: break-word;
   color: #0D47A1;
   max-height: 70vh; /* Limit chat box height */
@@ -280,16 +237,6 @@ input:checked + .slider:before {
     margin-left: 0;
     margin-top: 10px;
   }
-
-  /* Adjust chat container padding */
-  .chatContainer {
-    padding: 5px;
-  }
-
-  /* Adjust chat box for mobile */
-  .chatBox {
-    font-size: 12px;
-  }
 }
 
 /* Main Container */
@@ -366,35 +313,6 @@ input:checked + .slider:before {
   color: #D9F1FF; /* Light Blue */
 }
 
-
-/* Chat Box Container */
-.chatBox {
-  background-color: #FFFFFF;
-  border: 1px solid #BCE0FD; /* Light Blue Border */
-  border-radius: 6px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  overflow-y: auto;
-  max-height: 70vh; /* Adjust chatbox height */
-}
-
-/* Message Box */
-.messageBox {
-  padding: 12px;
-  font-size: 1em;
-  color: #3E5159; /* Dark Gray */
-  background-color: #f4fcf6; /* Very Light Blue */
-  border-radius: 6px;
-  margin: 8px 0;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  word-wrap: break-word;
-}
-
-/* Alternate Message Styling */
-.messageBox:nth-child(even) {
-  background-color: #EAF5FF; /* Slightly darker light blue */
-}
-
 /* Frame Heading */
 .frameHeading {
   font-size: 1.8em;
@@ -403,14 +321,6 @@ input:checked + .slider:before {
   color: #448bdb; /* Dark blue */
   text-align: center;
 }
-
-/* Dropdown Container */
-.dropdownContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 
 /* Frame Body */
 .frameBody {
@@ -468,21 +378,6 @@ input:checked + .slider:before {
   margin-bottom: 15px;
 }
 
-/* Toggle Switch */
-.toggleSwitch {
-  position: relative;
-  width: 50px;
-  height: 25px;
-  background-color: #c4c4c4; /* Gray background */
-  border-radius: 50px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 25px;
-  font-size: 12px;
-  color: #ffffff; /* Text color */
-  transition: background-color 0.3s ease;
-}
-
 /* Toggle Switch Circle (Optional if needed) */
 .toggleSwitch::before {
   content: '';
@@ -505,28 +400,6 @@ input:checked + .slider:before {
   transform: translateX(25px);
 }
 
-
-/* Toggle Button */
-.toggleButton {
-  padding: 10px 20px;
-  font-size: 14px;
-  border: 2px solid #448bdb; /* Dark blue border */
-  border-radius: 4px;
-  background-color: #ffffff; /* White background */
-  color: #448bdb; /* Dark blue text */
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.toggleButton.active {
-  background-color: #448bdb; /* Dark blue background */
-  color: #ffffff; /* White text */
-}
-
-.toggleButton:hover {
-  background-color: #225a9e; /* Slightly darker blue for hover */
-  color: #ffffff; /* White text */
-}
 .expandContent {
   margin-top: 10px;
   padding: 10px;
@@ -567,15 +440,7 @@ input:checked + .slider:before {
 .expandButton:hover {
   background-color: #0056b3;
 }
-.textEntryField {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  box-sizing: border-box;
-}
+
 
 .textEntryField:focus {
   border-color: #007bff;
