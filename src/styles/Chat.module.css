@@ -5,6 +5,49 @@
   margin: 10px 0;
 }
 
+.toggleSwitch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toggleSwitch input {
+  display: none;
+}
+
+.slider {
+  position: relative;
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+}
+
+
+
+
 .toggleButton {
   background-color: white;
   color: blue;
@@ -45,6 +88,36 @@
   justify-content: space-around;
   margin: 10px 0;
 }
+
+.toggleSwitch {
+  width: 50px;
+  height: 25px;
+  background-color: #ccc; /* Default gray background */
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggleSwitch.active {
+  background-color: #448bdb; /* Active blue background */
+}
+
+.toggleCircle {
+  width: 21px;
+  height: 21px;
+  background-color: #fff; /* White toggle */
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s ease;
+}
+
+.toggleSwitch.active .toggleCircle {
+  left: 27px; /* Position to the right when active */
+}
+
 
 /* Chat 2 Specific Styles */
 .chat2FrameBody .expandButton {
@@ -386,14 +459,52 @@
   }
 }
 
-/* Toggle Button Container */
+/* Toggle Container */
 .toggleButtonsContainer {
-  display:inline-flex;
+  display: inline-flex;
   justify-content: center;
   gap: 15px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+/* Toggle Switch */
+.toggleSwitch {
+  position: relative;
+  width: 50px;
+  height: 25px;
+  background-color: #c4c4c4; /* Gray background */
+  border-radius: 50px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 25px;
+  font-size: 12px;
+  color: #ffffff; /* Text color */
+  transition: background-color 0.3s ease;
+}
+
+/* Toggle Switch Circle (Optional if needed) */
+.toggleSwitch::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff; /* White circle */
+  border-radius: 50%;
+  top: 2.5px;
+  left: 2.5px;
+  transition: transform 0.3s ease;
+}
+
+/* Active State */
+.toggleSwitch.active {
+  background-color: #448bdb; /* Blue background */
+}
+
+.toggleSwitch.active::before {
+  transform: translateX(25px);
+}
+
 
 /* Toggle Button */
 .toggleButton {

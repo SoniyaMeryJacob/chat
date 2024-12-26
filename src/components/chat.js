@@ -119,26 +119,33 @@ export default function HomePage() {
                     </div>
                   )}
                   {/* Toggle Buttons */}
-                  <div className={styles.chat1Toggles}>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 1')}
-                    >
-                      Toggle 1
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 2')}
-                    >
-                      Toggle 2
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 3')}
-                    >
-                      Toggle 3
-                    </button>
-                  </div>
+{/* Toggle Switches */}
+{/* Toggle Switches */}
+<div className={styles.toggleButtonsContainer}>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 1' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 1')}
+  >
+  </div>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 2' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 2')}
+  >
+  </div>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 3' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 3')}
+  >
+  </div>
+</div>
+
+
                 </>
               )}
 
@@ -178,28 +185,31 @@ export default function HomePage() {
                     className={styles.textEntryField}
                     placeholder="Enter text here..."
                   />
+{/* Toggle Switches */}
+<div className={styles.toggleButtonsContainer}>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 1' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 1')}
+  >
+  </div>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 2' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 2')}
+  >
+  </div>
+  <div
+    className={`${styles.toggleSwitch} ${
+      activeToggle === 'Toggle 3' ? styles.active : ''
+    }`}
+    onClick={() => handleToggleClick('Toggle 3')}
+  >
+  </div>
+</div>
 
-                  {/* Toggle Buttons */}
-                  <div className={styles.toggleButtonsContainer}>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 1')}
-                    >
-                      Toggle 1
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 2')}
-                    >
-                      Toggle 2
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 3')}
-                    >
-                      Toggle 3
-                    </button>
-                  </div>
 
                   {/* Second Expand Button */}
                   <button
@@ -261,26 +271,32 @@ export default function HomePage() {
                   )}
 
                   {/* Toggle Buttons in a Row */}
-                  <div className={styles.toggleButtonsRow}>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 1')}
-                    >
-                      Toggle 1
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 2')}
-                    >
-                      Toggle 2
-                    </button>
-                    <button
-                      className={styles.toggleButton}
-                      onClick={() => handleToggleClick('Toggle 3')}
-                    >
-                      Toggle 3
-                    </button>
-                  </div>
+<div className={styles.toggleButtonsRow}>
+  <div className={styles.toggleSwitch}>
+    <input
+      type="checkbox"
+      id="toggle1"
+      onChange={() => handleToggleClick('Toggle 1')}
+    />
+    <label htmlFor="toggle1" className={styles.slider}></label>
+  </div>
+  <div className={styles.toggleSwitch}>
+    <input
+      type="checkbox"
+      id="toggle2"
+      onChange={() => handleToggleClick('Toggle 2')}
+    />
+    <label htmlFor="toggle2" className={styles.slider}></label>
+  </div>
+  <div className={styles.toggleSwitch}>
+    <input
+      type="checkbox"
+      id="toggle3"
+      onChange={() => handleToggleClick('Toggle 3')}
+    />
+    <label htmlFor="toggle3" className={styles.slider}></label>
+  </div>
+</div>
 
                   {/* Second Expand Button */}
                   <button
