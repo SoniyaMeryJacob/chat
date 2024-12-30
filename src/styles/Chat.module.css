@@ -137,30 +137,29 @@ input:checked + .slider:before {
   overflow-y: auto; /* Add scroll for long messages */
 }
 
+
 /* Message */
 .message {
   background-color: #ffffff80; /* Light Gray Background */
   color: #0D47A1; /* Dark Gray-Blue Text */
+  display: flex;
+  align-items: center;
   padding: 10px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  text-align: left;
+  gap: 10px;
 }
 
 /* Input Area */
 .inputArea {
-  display: flex;
+  display: contents;
   align-items: center;
   padding: 15px;
   background-color: rgba(68, 139, 219, 0.15); /* Light Gray */
   border-top: 1px solid #90CAF9;
   gap: 10px;
-  justify-content: space-between;
 }
 
 /* Input Field */
 .inputField {
-  flex: 1;
   padding: 10px;
   border: 1px solid #64B5F6;
   border-radius: 4px;
@@ -177,11 +176,11 @@ input:checked + .slider:before {
 
 /* Send Button */
 .sendButton {
-  padding: 10px 15px;
+  padding: 8px 16px;
   background: #0d6efd;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 14px;
@@ -252,7 +251,8 @@ input:checked + .slider:before {
 
 /* Left Section */
 .leftSection {
-  flex: 2;
+  overflow-y: auto;
+  flex: 3;
   background-color: #E3F2FD; /* Pure White */
   border-right: 2px solid #03A9F4; /* Subtle Divider */
   padding: 10px;
@@ -262,6 +262,7 @@ input:checked + .slider:before {
 
 /* Right Section */
 .rightSection {
+  overflow-y: auto;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -323,7 +324,9 @@ input:checked + .slider:before {
 }
 
 /* Frame Body */
+
 .frameBody {
+  flex: 1;
   font-size: 1.2em;
   text-align: left;
   white-space: pre-wrap; /* Preserve line breaks */
@@ -336,7 +339,12 @@ input:checked + .slider:before {
   background-color: #fdfdfd; /* Very light background color for subtle contrast */
   border-radius: 6px; /* Rounded corners for a softer look */
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
+  height: 75vh; /* Set height to 75% of the viewport height */
+  max-height: 75vh; /* Prevent exceeding 75% of the viewport height */
+  overflow-y: auto; /* Add scroll for long content */
 }
+
+
 
 /* Fade-in animation for the frame */
 .frame {
