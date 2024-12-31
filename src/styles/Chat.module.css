@@ -201,16 +201,19 @@ input:checked + .slider:before {
   margin-left: 10px;
 }
 
-/* Responsive Adjustments */
+/* Responsive Adjustments for Mobile Devices */
 @media (max-width: 768px) {
   .chatContainer {
     margin: 5px;
     height: auto;
-    max-height: none;  }
+    max-height: none;
+    padding: 10px; /* Adjusted padding for mobile */
+  }
 
   .chatBox {
     padding: 10px;
-    font-size: 13px;
+    font-size: 14px; /* Slightly larger font size for readability */
+    max-height: 60vh; /* Adjust the chat box height */
   }
 
   .inputArea {
@@ -222,18 +225,136 @@ input:checked + .slider:before {
 
   .inputField {
     margin-bottom: 0;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .sendButton {
     width: auto;
-    padding: 12px;
+    padding: 10px;
     font-size: 14px;
   }
 
   .fileUpload {
     margin-left: 0;
     margin-top: 10px;
+  }
+
+  .homeContainer {
+    flex-direction: column; /* Stack sections vertically on small screens */
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .leftSection, .rightSection {
+    flex: 1; /* Allow both sections to take equal space */
+    padding: 10px;
+  }
+
+  .rightSection {
+    background-color: #dfdfdf;
+  }
+
+  .botsHeader {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+  }
+
+  .botContainer {
+    margin-bottom: 10px;
+  }
+
+  .botHeader {
+    padding: 10px;
+    font-size: 16px;
+    justify-content: space-between;
+  }
+
+  .frame {
+    padding: 10px;
+    font-size: 14px;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .messageList {
+    margin-top: 10px;
+  }
+
+  .expandButton {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    border-radius: 6px;
+  }
+
+  /* Table Styles for Small Screens */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block; /* Make the table scrollable horizontally */
+  }
+
+  .table th, .table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 12px; /* Adjust font size for small screens */
+  }
+
+  .table th {
+    background-color: #f4f4f4;
+  }
+
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .table thead {
+    border-bottom: 2px solid #ddd;
+  }
+
+  /* Make table data stack in mobile */
+  .table th, .table td {
+    display: block;
+    width: 100%;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .table th::before, .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+  }
+
+  .toggleButtonsContainer {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .toggleSwitch {
+    width: 40px; /* Smaller toggle for mobile */
+    height: 20px;
+  }
+
+  .toggleCircle {
+    width: 16px;
+    height: 16px;
+  }
+
+  .message {
+    padding: 8px 10px;
+    font-size: 12px;
+    flex-direction: column;
+  }
+
+  .textEntryField {
+    padding: 10px;
+    font-size: 14px;
   }
 }
 
