@@ -48,10 +48,11 @@ export default function HomePage() {
       [bot]: !isSecondExpanded[bot], // Toggle second expand/collapse state
     });
   };
-
   return (
     <div className={styles.homeContainer}>
       <div className={styles.leftSection}>
+        {/* Conditionally render the Rag App title */}
+        {!openBot && <h1>RAG APP</h1>}
         {openBot && (
           <div className={`${styles.frame} ${layoutClasses[openBot]}`}>
             <h2 className={styles.frameHeading}>Welcome to Chat {openBot}</h2>

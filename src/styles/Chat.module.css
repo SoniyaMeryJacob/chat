@@ -88,7 +88,6 @@ input:checked + .slider:before {
   left: 27px; /* Position to the right when active */
 }
 
-
 /* Chat 2 Specific Styles */
 .chat2FrameBody .expandButton {
   background-color: blue;
@@ -251,13 +250,9 @@ input:checked + .slider:before {
 
 /* Left Section */
 .leftSection {
-  overflow-y: auto;
+  padding-left: 10px;
   flex: 3;
-  background-color: #E3F2FD; /* Pure White */
-  border-right: 2px solid #03A9F4; /* Subtle Divider */
-  padding: 10px;
   display: flex;
-  flex-direction: column;
 }
 
 /* Right Section */
@@ -326,7 +321,6 @@ input:checked + .slider:before {
 /* Frame Body */
 
 .frameBody {
-  flex: 1;
   font-size: 1.2em;
   text-align: left;
   white-space: pre-wrap; /* Preserve line breaks */
@@ -348,6 +342,7 @@ input:checked + .slider:before {
 
 /* Fade-in animation for the frame */
 .frame {
+  flex: 1;
   background-color: white; /* Light blue background for consistency */
   padding: 20px;
   border-radius: 8px;
