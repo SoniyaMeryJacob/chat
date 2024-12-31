@@ -1,7 +1,32 @@
-
 /* src/styles/global.css */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+h1 {
+  display: flex; /* Enable flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 0; /* Reset unnecessary padding */
+  color: #0056b3;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px auto; /* Center the element horizontally */
+  text-align: center; /* Center the text within the element */
+}
+
+/* Mobile-specific styles using media query */
+@media (max-width: 600px) {
+body {
+  padding: 10px; /* Add some padding to the body for mobile */
+}
+
+h1 {
+  font-size: 18px; /* Reduce font size for smaller screens */
+  margin: 15px auto; /* Adjust margin for better spacing on mobile */
+}
 }
