@@ -8,6 +8,8 @@ export default function HomePage() {
   const [activeToggle, setActiveToggle] = useState(null);
   const [isExpanded, setIsExpanded] = useState({}); // To manage expansion per bot
   const [isSecondExpanded, setIsSecondExpanded] = useState({}); // To manage second expansion
+  const [chatHistory, setChatHistory] = useState({}); // State for chat histories
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar visibility state
 
   const layoutClasses = {
     1: styles.layout1,
@@ -26,7 +28,13 @@ export default function HomePage() {
         ...messages,
         [bot]: [...(messages[bot] || []), newMessage],
       };
+      const updatedHistory = {
+        ...chatHistory,
+        [bot]: [...(chatHistory[bot] || []), newMessage],
+      };
+
       setMessages(updatedMessages);
+      setChatHistory(updatedHistory);
       setInput({ ...input, [bot]: '' });
     }
   };
@@ -48,9 +56,46 @@ export default function HomePage() {
       [bot]: !isSecondExpanded[bot], // Toggle second expand/collapse state
     });
   };
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className={styles.homeContainer}>
       <div className={styles.leftSection}>
+        {/* Sidebar for Chat History */}
+    {/* Sidebar */}
+      {isSidebarOpen && openBot && (
+        <div className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <h3>Chat {openBot} History</h3>
+            <button
+              className={styles.sidebarCloseButton}
+              onClick={handleToggleSidebar}
+            >
+              Close
+            </button>
+          </div>
+          <div className={styles.historyList}>
+            {(chatHistory[openBot] || []).map((msg, index) => (
+              <div key={index} className={styles.historyItem}>
+                {msg.text}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Open Button */}
+      {!isSidebarOpen && openBot && (
+        <button
+          className={styles.sidebarOpenButton}
+          onClick={handleToggleSidebar}
+        >
+          Open Chat History
+        </button>
+      )}
         {/* Conditionally render the Rag App title */}
         {!openBot && <h1>RAG APP</h1>}
         {openBot && (
