@@ -1,3 +1,4 @@
+
 .sidebar {
   width: 250px;
   background: #f1f1f1;
@@ -9,10 +10,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
-
-.sidebarCloseButton,
-.sidebarOpenButton {
+.sidebarHeader:hover {
+  background-color: #ddd; /* Optional hover effect */
+}
+.sidebarCloseButton {
   background-color: #007bff;
   color: white;
   border: none;
@@ -21,11 +24,47 @@
   border-radius: 4px;
 }
 
-.sidebarOpenButton {
+/* Sidebar Toggle Icon at Top Left */
+.sidebarToggleIcon {
   position: absolute;
-  left: 10px;
   top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
 }
+
+.sidebarToggleIcon:hover {
+  color: #007bff; /* Hover effect */
+}
+
+/* Add New Chat Icon at Top Right */
+.addChatIcon {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  padding: 5px;
+}
+
+.newChatIcon {
+  position: absolute;
+  top: 0px;
+  width: 50px ; /* Set the desired width */
+  height: auto !important; /* Maintain aspect ratio */
+  display: block;
+  margin: auto; /* Center it if needed */ /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the new chat icon */
+.newChatIcon:hover {
+  transform: scale(1.2); /* Slight zoom-in effect */
+  filter: brightness(1.2); /* Slightly increase brightness */
+}
+
 
 .historyList {
   max-height: 300px;
@@ -37,9 +76,125 @@
   border-bottom: 1px solid #ddd;
 }
 
+.frameHeading {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #448bdb; /* Dark blue */
+  text-align: center;
+}
+
+.frameBody {
+  font-size: 1.2em;
+  text-align: left;
+  white-space: pre-wrap; /* Preserve line breaks */
+  overflow-wrap: break-word; /* Break long words */
+  line-height: 1.6; /* Increased line height for better readability */
+  font-family: 'Roboto', sans-serif; /* Modern and clean font family */
+  font-weight: 400; /* Regular font weight for body text */
+  padding: 15px; /* Add some padding for breathing space */
+  letter-spacing: 0.5px; /* Slight letter spacing for improved legibility */
+  background-color: #fdfdfd; /* Very light background color for subtle contrast */
+  border-radius: 6px; /* Rounded corners for a softer look */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
+  height: 75vh; /* Set height to 75% of the viewport height */
+  max-height: 75vh; /* Prevent exceeding 75% of the viewport height */
+  overflow-y: auto; /* Add scroll for long content */
+}
+
+/* Fade-in animation for the frame */
+.frame {
+  flex: 1;
+  background-color: white; /* Light blue background for consistency */
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0D47A1; /* Dark blue for readable text */
+  height: 100%;
+  white-space: pre-line; /* Ensures line breaks are respected */
+  overflow-y: auto; /* Add scrolling if the content is too long */
+  border: 1px solid #90CAF9; /* Soft border for separation */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center; /* Center align the text */
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.8s ease-in-out; /* Smooth animation */
+}
+
+/* Optional: Fade-in animation for the frame */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
-/* Chat 3 Specific Styles */
+/* ---------------------------------------------------------------------------------------------------------------*/
+/* Chat Specific Styles */
+.chat2FrameBody .expandButton {
+  background-color: blue;
+  color: white;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat2FrameBody .textEntryField {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+/* Dynamic layouts */
+.layout1 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout1 .toggleButtonsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.layout2 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.layout2 .toggleButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+.layout3 .frameBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout3 .toggleButtonsContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
 .toggleButtonsRow {
   display: flex;
   justify-content: space-around;
@@ -97,7 +252,7 @@ input:checked + .slider:before {
 }
 
 .toggleSwitch {
-  background-color: #c4c4c4; /* Gray background */
+  background-color: #c4c4c4;
   text-align: center;
   line-height: 25px;
   font-size: 12px;
@@ -126,27 +281,10 @@ input:checked + .slider:before {
 }
 
 .toggleSwitch.active .toggleCircle {
-  left: 27px; /* Position to the right when active */
+  left: 27px;
 }
+/*--------------------------------------------------------------------------------------------------------------*/
 
-/* Chat 2 Specific Styles */
-.chat2FrameBody .expandButton {
-  background-color: blue;
-  color: white;
-  margin: 10px 0;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.chat2FrameBody .textEntryField {
-  margin: 10px 0;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 
 /* Chat Container */
 .chatContainer {
@@ -176,7 +314,6 @@ input:checked + .slider:before {
   max-height: 70vh; /* Limit chat box height */
   overflow-y: auto; /* Add scroll for long messages */
 }
-
 
 /* Message */
 .message {
@@ -242,163 +379,6 @@ input:checked + .slider:before {
   margin-left: 10px;
 }
 
-/* Responsive Adjustments for Mobile Devices */
-@media (max-width: 768px) {
-  .chatContainer {
-    margin: 5px;
-    height: auto;
-    max-height: none;
-    padding: 10px; /* Adjusted padding for mobile */
-  }
-
-  .chatBox {
-    padding: 10px;
-    font-size: 14px; /* Slightly larger font size for readability */
-    max-height: 60vh; /* Adjust the chat box height */
-  }
-
-  .inputArea {
-    padding: 10px;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .inputField {
-    margin-bottom: 0;
-    font-size: 14px;
-  }
-
-  .sendButton {
-    width: auto;
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .fileUpload {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-
-  .homeContainer {
-    flex-direction: column; /* Stack sections vertically on small screens */
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .leftSection, .rightSection {
-    flex: 1; /* Allow both sections to take equal space */
-    padding: 10px;
-  }
-
-  .rightSection {
-    background-color: #dfdfdf;
-  }
-
-  .botsHeader {
-    font-size: 1.6em;
-    margin-bottom: 10px;
-  }
-
-  .botContainer {
-    margin-bottom: 10px;
-  }
-
-  .botHeader {
-    padding: 10px;
-    font-size: 16px;
-    justify-content: space-between;
-  }
-
-  .frame {
-    padding: 10px;
-    font-size: 14px;
-    animation: fadeIn 0.8s ease-in-out;
-  }
-
-  .messageList {
-    margin-top: 10px;
-  }
-
-  .expandButton {
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #007bff;
-    border-radius: 6px;
-  }
-
-  /* Table Styles for Small Screens */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow-x: auto;
-    display: block; /* Make the table scrollable horizontally */
-  }
-
-  .table th, .table td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-    font-size: 12px; /* Adjust font size for small screens */
-  }
-
-  .table th {
-    background-color: #f4f4f4;
-  }
-
-  .table tr:hover {
-    background-color: #f1f1f1;
-  }
-
-  .table thead {
-    border-bottom: 2px solid #ddd;
-  }
-
-  /* Make table data stack in mobile */
-  .table th, .table td {
-    display: block;
-    width: 100%;
-    text-align: right;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  .table th::before, .table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-weight: bold;
-  }
-
-  .toggleButtonsContainer {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .toggleSwitch {
-    width: 40px; /* Smaller toggle for mobile */
-    height: 20px;
-  }
-
-  .toggleCircle {
-    width: 16px;
-    height: 16px;
-  }
-
-  .message {
-    padding: 8px 10px;
-    font-size: 12px;
-    flex-direction: column;
-  }
-
-  .textEntryField {
-    padding: 10px;
-    font-size: 14px;
-  }
-}
-
 /* Main Container */
 .homeContainer {
   display: flex;
@@ -415,6 +395,7 @@ input:checked + .slider:before {
   padding-left: 10px;
   flex: 3;
   display: flex;
+  flex-direction: row;
 }
 
 /* Right Section */
@@ -471,68 +452,6 @@ input:checked + .slider:before {
   color: #D9F1FF; /* Light Blue */
 }
 
-/* Frame Heading */
-.frameHeading {
-  font-size: 1.8em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #448bdb; /* Dark blue */
-  text-align: center;
-}
-
-/* Frame Body */
-
-.frameBody {
-  font-size: 1.2em;
-  text-align: left;
-  white-space: pre-wrap; /* Preserve line breaks */
-  overflow-wrap: break-word; /* Break long words */
-  line-height: 1.6; /* Increased line height for better readability */
-  font-family: 'Roboto', sans-serif; /* Modern and clean font family */
-  font-weight: 400; /* Regular font weight for body text */
-  padding: 15px; /* Add some padding for breathing space */
-  letter-spacing: 0.5px; /* Slight letter spacing for improved legibility */
-  background-color: #fdfdfd; /* Very light background color for subtle contrast */
-  border-radius: 6px; /* Rounded corners for a softer look */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
-  height: 75vh; /* Set height to 75% of the viewport height */
-  max-height: 75vh; /* Prevent exceeding 75% of the viewport height */
-  overflow-y: auto; /* Add scroll for long content */
-}
-
-
-
-/* Fade-in animation for the frame */
-.frame {
-  flex: 1;
-  background-color: white; /* Light blue background for consistency */
-  padding: 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #0D47A1; /* Dark blue for readable text */
-  height: 100%;
-  white-space: pre-line; /* Ensures line breaks are respected */
-  overflow-y: auto; /* Add scrolling if the content is too long */
-  border: 1px solid #90CAF9; /* Soft border for separation */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  text-align: center; /* Center align the text */
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.8s ease-in-out; /* Smooth animation */
-}
-
-/* Optional: Fade-in animation for the frame */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Toggle Container */
 .toggleButtonsContainer {
@@ -626,11 +545,10 @@ input:checked + .slider:before {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  overflow-x: auto; /* Enable horizontal scroll */
-  display: block; /* Make table scrollable on smaller devices */
+  overflow-x: auto;
+  display: block; 
 }
 
-/* Table header and cells */
 .table th,
 .table td {
   padding: 12px;
@@ -657,279 +575,20 @@ input:checked + .slider:before {
   border-bottom: 2px solid #ddd;
 }
 
-/* Responsive table for small screens */
-@media (max-width: 600px) {
-  .table {
-    display: block; /* Allow horizontal scrolling */
-    overflow-x: auto;
-    white-space: nowrap; /* Prevent wrapping of text */
-  }
-
-  /* Stacked layout for table rows */
-  .table th,
-  .table td {
-    display: block;
-    width: 100%;
-    text-align: right;
-    position: relative;
-    padding-left: 50%; /* Create space for row headers */
-    box-sizing: border-box;
-  }
-
-  .table th::before,
-  .table td::before {
-    content: attr(data-label); /* Use data-label attribute for row headers */
-    position: absolute;
-    left: 15px;
-    width: calc(50% - 15px); /* Align row headers to the left */
-    font-weight: bold;
-    text-align: left;
-  }
-
-  .table thead {
-    display: none; /* Hide table headers on mobile */
-  }
-
-  .table tr {
-    margin-bottom: 10px; /* Add spacing between rows */
-    border-bottom: 2px solid #ddd;
-  }
-}
-
-
-/* Dynamic layouts */
-.layout1 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.layout1 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 10px;
-}
-
-.layout2 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.layout2 .toggleButtonsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-
-.layout3 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.layout3 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
-}
-
-
-/* Chat 3 Specific Styles */
-.toggleButtonsRow {
-  display: flex;
-  justify-content: space-around;
-  margin: 10px 0;
-}
-
-.toggleSwitch input {
-  display: none;
-}
-
-.slider {
-  position: relative;
-  width: 50px;
-  height: 25px;
-  background-color: #ccc;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 19px;
-  width: 19px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:checked + .slider:before {
-  transform: translateX(25px);
-}
-
-
-.chat1Buttons {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.toggleSwitch {
-  background-color: #c4c4c4; /* Gray background */
-  text-align: center;
-  line-height: 25px;
-  font-size: 12px;
-  color: #ffffff; /* Text color */
-  transition: background-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50px;
-  height: 25px;
-  border-radius: 25px;
-  position: relative;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.toggleCircle {
-  width: 21px;
-  height: 21px;
-  background-color: #fff; /* White toggle */
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: left 0.3s ease;
-}
-
-.toggleSwitch.active .toggleCircle {
-  left: 27px; /* Position to the right when active */
-}
-
-/* Chat 2 Specific Styles */
-
-
-
-
-/* Chat Container */
-.chatContainer {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-height: 90vh;
-  border: 1px solid #BCE0FD; /* Light Gray */
-  border-radius: 8px;
-  background-color: #E3F2FD; /* White Background */
-  margin: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-/* Chat Box for Messages */
-.chatBox {
-  font-size: 12px;
-  border: 1px solid #BCE0FD; /* Light Blue Border */
-  border-radius: 6px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  flex: 1;
-  padding: 15px;
-  background-color: #f9f9f9; /* Slightly lighter than default */
-  word-wrap: break-word;
-  color: #0D47A1;
-  max-height: 70vh; /* Limit chat box height */
-  overflow-y: auto; /* Add scroll for long messages */
-}
-
-
-/* Message */
-.message {
-  background-color: #ffffff80; /* Light Gray Background */
-  color: #0D47A1; /* Dark Gray-Blue Text */
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
-}
-
-/* Input Area */
-.inputArea {
-  display: contents;
-  align-items: center;
-  padding: 15px;
-  background-color: rgba(68, 139, 219, 0.15); /* Light Gray */
-  border-top: 1px solid #90CAF9;
-  gap: 10px;
-}
-
-/* Input Field */
-.inputField {
-  padding: 10px;
-  border: 1px solid #64B5F6;
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: #FFFFFF; /* White */
-  color: #0D47A1;
-  transition: border 0.3s ease;
-}
-
-.inputField:focus {
-  border: 1px solid #0288D1; /* Blue border on focus */
-  outline: none;
-}
-
-/* Send Button */
-.sendButton {
-  padding: 8px 16px;
-  background: #0d6efd;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 14px;
-}
-
-.sendButton:hover {
-  background-color: #0b5ed7; /* Hover Effect - Light Cyan */
-}
-
-/* File Upload Link */
-.fileLink {
-  color: #0d6efd; /* Dark Gray-Blue */
-  text-decoration: underline;
-  margin: 5px 0;
-  display: block;
-}
-
-.fileUpload {
-  margin-left: 10px;
-}
-
+/* ------------------------------------------------------------------------------------------------------------- */
 /* Responsive Adjustments for Mobile Devices */
 @media (max-width: 768px) {
   .chatContainer {
     margin: 5px;
     height: auto;
     max-height: none;
-    padding: 10px; /* Adjusted padding for mobile */
+    padding: 10px; 
   }
 
   .chatBox {
     padding: 10px;
-    font-size: 14px; /* Slightly larger font size for readability */
-    max-height: 60vh; /* Adjust the chat box height */
+    font-size: 14px; 
+    max-height: 60vh; 
   }
 
   .inputArea {
@@ -956,13 +615,13 @@ input:checked + .slider:before {
   }
 
   .homeContainer {
-    flex-direction: column; /* Stack sections vertically on small screens */
+    flex-direction: column;
     gap: 10px;
     padding: 10px;
   }
 
   .leftSection, .rightSection {
-    flex: 1; /* Allow both sections to take equal space */
+    flex: 1; 
     padding: 10px;
   }
 
@@ -1002,19 +661,23 @@ input:checked + .slider:before {
     border-radius: 6px;
   }
 
-  /* Table Styles for Small Screens */
   .table {
     width: 100%;
     border-collapse: collapse;
     overflow-x: auto;
-    display: block; /* Make the table scrollable horizontally */
+    display: block; 
   }
 
   .table th, .table td {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
-    font-size: 12px; /* Adjust font size for small screens */
+    font-size: 12px; 
+    display: block;
+    width: 100%;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
   }
 
   .table th {
@@ -1027,15 +690,6 @@ input:checked + .slider:before {
 
   .table thead {
     border-bottom: 2px solid #ddd;
-  }
-
-  /* Make table data stack in mobile */
-  .table th, .table td {
-    display: block;
-    width: 100%;
-    text-align: right;
-    position: relative;
-    padding-left: 50%;
   }
 
   .table th::before, .table td::before {
@@ -1053,7 +707,7 @@ input:checked + .slider:before {
   }
 
   .toggleSwitch {
-    width: 40px; /* Smaller toggle for mobile */
+    width: 40px;
     height: 20px;
   }
 
@@ -1072,342 +726,4 @@ input:checked + .slider:before {
     padding: 10px;
     font-size: 14px;
   }
-}
-
-
-/* Main Container */
-.homeContainer {
-  display: flex;
-  height: 100vh;
-  background-color: #F8F9FA; /* Light Gray */
-  flex-direction: row;
-  gap: 20px; /* Gap between sections */
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/* Left Section */
-.leftSection {
-  padding-left: 10px;
-  flex: 3;
-  display: flex;
-}
-
-/* Right Section */
-.rightSection {
-  overflow-y: auto;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: #dfdfdf; /* Light Sky Blue */
-  color: #0A0A0A; /* Dark text for readability */
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-/* Header for BOTS */
-.botsHeader {
-  text-align: center;
-  font-size: 1.8em;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #0288D1; /* Bright Blue */
-  border-bottom: 3px solid #0d6efd; /* Blue Border */
-  padding-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-/* Individual Bot Container */
-.botContainer {
-  margin-bottom: 15px;
-}
-
-/* Bot Header */
-.botHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #03A9F4; /* Primary Blue */
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.botHeader:hover {
-  background-color: #0288D1; /* Darker Blue */
-  transform: translateY(-2px);
-}
-
-/* Dropdown Icon */
-.dropdownIcon {
-  font-size: 16px;
-  color: #D9F1FF; /* Light Blue */
-}
-
-/* Frame Heading */
-.frameHeading {
-  font-size: 1.8em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #448bdb; /* Dark blue */
-  text-align: center;
-}
-
-/* Frame Body */
-
-.frameBody {
-  font-size: 1.2em;
-  text-align: left;
-  white-space: pre-wrap; /* Preserve line breaks */
-  overflow-wrap: break-word; /* Break long words */
-  line-height: 1.6; /* Increased line height for better readability */
-  font-family: 'Roboto', sans-serif; /* Modern and clean font family */
-  font-weight: 400; /* Regular font weight for body text */
-  padding: 15px; /* Add some padding for breathing space */
-  letter-spacing: 0.5px; /* Slight letter spacing for improved legibility */
-  background-color: #fdfdfd; /* Very light background color for subtle contrast */
-  border-radius: 6px; /* Rounded corners for a softer look */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
-  height: 75vh; /* Set height to 75% of the viewport height */
-  max-height: 75vh; /* Prevent exceeding 75% of the viewport height */
-  overflow-y: auto; /* Add scroll for long content */
-}
-
-
-
-/* Fade-in animation for the frame */
-.frame {
-  flex: 1;
-  background-color: white; /* Light blue background for consistency */
-  padding: 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #0D47A1; /* Dark blue for readable text */
-  height: 100%;
-  white-space: pre-line; /* Ensures line breaks are respected */
-  overflow-y: auto; /* Add scrolling if the content is too long */
-  border: 1px solid #90CAF9; /* Soft border for separation */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  text-align: center; /* Center align the text */
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.8s ease-in-out; /* Smooth animation */
-}
-
-/* Optional: Fade-in animation for the frame */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Toggle Container */
-.toggleButtonsContainer {
-  display: inline-flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-/* Toggle Switch Circle (Optional if needed) */
-.toggleSwitch::before {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: #ffffff; /* White circle */
-  border-radius: 50%;
-  top: 2.5px;
-  left: 2.5px;
-  transition: transform 0.3s ease;
-}
-
-/* Active State */
-.toggleSwitch.active {
-  background-color: #448bdb; /* Blue background */
-}
-
-.toggleSwitch.active::before {
-  transform: translateX(25px);
-}
-
-.expandContent {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
-
-.loremText {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.messageList {
-  margin-top: 10px;
-}
-
-.messageItem {
-  font-size: 14px;
-  color: #333;
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.expandButton {
-  display:grid;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.expandButton:hover {
-  background-color: #0056b3;
-}
-
-
-.textEntryField:focus {
-  border-color: #007bff;
-  outline: none;
-}
-.secondExpandableField {
-  display:flexbox;
-  background-color: #e2e2e2;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Table styles */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  overflow-x: auto; /* Enable horizontal scroll */
-  display: block; /* Make table scrollable on smaller devices */
-}
-
-/* Table header and cells */
-.table th,
-.table td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-  color: #333;
-}
-
-.table td {
-  background-color: #fff;
-  color: #555;
-}
-
-.table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.table thead {
-  border-bottom: 2px solid #ddd;
-}
-
-/* Responsive table for small screens */
-@media (max-width: 600px) {
-  .table {
-    display: block; /* Allow horizontal scrolling */
-    overflow-x: auto;
-    white-space: nowrap; /* Prevent wrapping of text */
-  }
-
-  /* Stacked layout for table rows */
-  .table th,
-  .table td {
-    display: block;
-    width: 100%;
-    text-align: right;
-    position: relative;
-    padding-left: 50%; /* Create space for row headers */
-    box-sizing: border-box;
-  }
-
-  .table th::before,
-  .table td::before {
-    content: attr(data-label); /* Use data-label attribute for row headers */
-    position: absolute;
-    left: 15px;
-    width: calc(50% - 15px); /* Align row headers to the left */
-    font-weight: bold;
-    text-align: left;
-  }
-
-  .table thead {
-    display: none; /* Hide table headers on mobile */
-  }
-
-  .table tr {
-    margin-bottom: 10px; /* Add spacing between rows */
-    border-bottom: 2px solid #ddd;
-  }
-}
-
-
-/* Dynamic layouts */
-.layout1 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.layout1 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 10px;
-}
-
-.layout2 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.layout2 .toggleButtonsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-
-.layout3 .frameBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.layout3 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
 }
