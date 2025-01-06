@@ -1,3 +1,18 @@
+.deleteButton {
+  position: relative;
+  left: 130px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.deleteButton:hover {
+  text-decoration: underline;
+  background-color: #ddd;
+}
 
 .sidebar {
   width: 250px;
@@ -40,31 +55,44 @@
   color: #007bff; /* Hover effect */
 }
 
-/* Add New Chat Icon at Top Right */
-.addChatIcon {
-  font-size: 20px;
+/* Button styling */
+.newChatButton {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1000;
-  padding: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Icon styling */
 .newChatIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Text styling */
+.newChatText {
+  display: none; /* Hidden by default */
   position: absolute;
-  top: 0px;
-  width: 50px ; /* Set the desired width */
-  height: auto !important; /* Maintain aspect ratio */
+  top: 30px; /* Adjust position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+/* Show text on hover */
+.newChatButton:hover .newChatText {
   display: block;
-  margin: auto; /* Center it if needed */ /* Smooth transition for hover effects */
 }
-
-/* Hover effect for the new chat icon */
-.newChatIcon:hover {
-  transform: scale(1.2); /* Slight zoom-in effect */
-  filter: brightness(1.2); /* Slightly increase brightness */
-}
-
 
 .historyList {
   max-height: 300px;
@@ -90,7 +118,7 @@
   white-space: pre-wrap; /* Preserve line breaks */
   overflow-wrap: break-word; /* Break long words */
   line-height: 1.6; /* Increased line height for better readability */
-  font-family: 'Roboto', sans-serif; /* Modern and clean font family */
+  font-family: "Roboto", sans-serif; /* Modern and clean font family */
   font-weight: 400; /* Regular font weight for body text */
   padding: 15px; /* Add some padding for breathing space */
   letter-spacing: 0.5px; /* Slight letter spacing for improved legibility */
@@ -110,11 +138,11 @@
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
-  color: #0D47A1; /* Dark blue for readable text */
+  color: #0d47a1; /* Dark blue for readable text */
   height: 100%;
   white-space: pre-line; /* Ensures line breaks are respected */
   overflow-y: auto; /* Add scrolling if the content is too long */
-  border: 1px solid #90CAF9; /* Soft border for separation */
+  border: 1px solid #90caf9; /* Soft border for separation */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   text-align: center; /* Center align the text */
   display: flex;
@@ -133,7 +161,6 @@
     transform: translateY(0);
   }
 }
-
 
 /* ---------------------------------------------------------------------------------------------------------------*/
 /* Chat Specific Styles */
@@ -154,7 +181,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
 
 /* Dynamic layouts */
 .layout1 .frameBody {
@@ -181,7 +207,6 @@
   gap: 10px;
   margin-top: 10px;
 }
-
 
 .layout3 .frameBody {
   display: flex;
@@ -285,7 +310,6 @@ input:checked + .slider:before {
 }
 /*--------------------------------------------------------------------------------------------------------------*/
 
-
 /* Chat Container */
 .chatContainer {
   padding: 5px;
@@ -293,16 +317,16 @@ input:checked + .slider:before {
   flex-direction: column;
   height: 100%;
   max-height: 90vh;
-  border: 1px solid #BCE0FD; /* Light Gray */
+  border: 1px solid #bce0fd; /* Light Gray */
   border-radius: 8px;
-  background-color: #E3F2FD; /* White Background */
+  background-color: #e3f2fd; /* White Background */
   margin: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /* Chat Box for Messages */
 .chatBox {
   font-size: 12px;
-  border: 1px solid #BCE0FD; /* Light Blue Border */
+  border: 1px solid #bce0fd; /* Light Blue Border */
   border-radius: 6px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
@@ -310,7 +334,7 @@ input:checked + .slider:before {
   padding: 15px;
   background-color: #f9f9f9; /* Slightly lighter than default */
   word-wrap: break-word;
-  color: #0D47A1;
+  color: #0d47a1;
   max-height: 70vh; /* Limit chat box height */
   overflow-y: auto; /* Add scroll for long messages */
 }
@@ -318,7 +342,7 @@ input:checked + .slider:before {
 /* Message */
 .message {
   background-color: #ffffff80; /* Light Gray Background */
-  color: #0D47A1; /* Dark Gray-Blue Text */
+  color: #0d47a1; /* Dark Gray-Blue Text */
   display: flex;
   align-items: center;
   padding: 10px;
@@ -331,28 +355,28 @@ input:checked + .slider:before {
   align-items: center;
   padding: 15px;
   background-color: rgba(68, 139, 219, 0.15); /* Light Gray */
-  border-top: 1px solid #90CAF9;
+  border-top: 1px solid #90caf9;
   gap: 10px;
 }
 
 /* Input Field */
 .inputField {
   padding: 10px;
-  border: 1px solid #64B5F6;
+  border: 1px solid #64b5f6;
   border-radius: 4px;
   font-size: 14px;
-  background-color: #FFFFFF; /* White */
-  color: #0D47A1;
+  background-color: #ffffff; /* White */
+  color: #0d47a1;
   transition: border 0.3s ease;
 }
 
 .inputField:focus {
-  border: 1px solid #0288D1; /* Blue border on focus */
+  border: 1px solid #0288d1; /* Blue border on focus */
   outline: none;
 }
 
 .inputField:hover {
-  color: #0D47A1;
+  color: #0d47a1;
 }
 
 /* Send Button */
@@ -387,7 +411,7 @@ input:checked + .slider:before {
 .homeContainer {
   display: flex;
   height: 100vh;
-  background-color: #F8F9FA; /* Light Gray */
+  background-color: #f8f9fa; /* Light Gray */
   flex-direction: row;
   gap: 20px; /* Gap between sections */
   padding: 20px;
@@ -410,7 +434,7 @@ input:checked + .slider:before {
   flex-direction: column;
   padding: 20px;
   background-color: #dfdfdf; /* Light Sky Blue */
-  color: #0A0A0A; /* Dark text for readability */
+  color: #0a0a0a; /* Dark text for readability */
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
@@ -420,7 +444,7 @@ input:checked + .slider:before {
   font-size: 1.8em;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #0288D1; /* Bright Blue */
+  color: #0288d1; /* Bright Blue */
   border-bottom: 3px solid #0d6efd; /* Blue Border */
   padding-bottom: 10px;
   letter-spacing: 1px;
@@ -437,7 +461,7 @@ input:checked + .slider:before {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  background-color: #03A9F4; /* Primary Blue */
+  background-color: #03a9f4; /* Primary Blue */
   color: white;
   border-radius: 6px;
   cursor: pointer;
@@ -446,16 +470,15 @@ input:checked + .slider:before {
 }
 
 .botHeader:hover {
-  background-color: #0288D1; /* Darker Blue */
+  background-color: #0288d1; /* Darker Blue */
   transform: translateY(-2px);
 }
 
 /* Dropdown Icon */
 .dropdownIcon {
   font-size: 16px;
-  color: #D9F1FF; /* Light Blue */
+  color: #d9f1ff; /* Light Blue */
 }
-
 
 /* Toggle Container */
 .toggleButtonsContainer {
@@ -468,7 +491,7 @@ input:checked + .slider:before {
 
 /* Toggle Switch Circle (Optional if needed) */
 .toggleSwitch::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
@@ -514,7 +537,7 @@ input:checked + .slider:before {
 }
 
 .expandButton {
-  display:grid;
+  display: grid;
   padding: 8px 12px;
   font-size: 14px;
   color: #fff;
@@ -529,13 +552,12 @@ input:checked + .slider:before {
   background-color: #0056b3;
 }
 
-
 .textEntryField:focus {
   border-color: #007bff;
   outline: none;
 }
 .secondExpandableField {
-  display:flexbox;
+  display: flexbox;
   background-color: #e2e2e2;
   padding: 10px;
   margin-top: 10px;
@@ -550,7 +572,7 @@ input:checked + .slider:before {
   border-collapse: collapse;
   margin-top: 20px;
   overflow-x: auto;
-  display: block; 
+  display: block;
 }
 
 .table th,
@@ -586,13 +608,13 @@ input:checked + .slider:before {
     margin: 5px;
     height: auto;
     max-height: none;
-    padding: 10px; 
+    padding: 10px;
   }
 
   .chatBox {
     padding: 10px;
-    font-size: 14px; 
-    max-height: 60vh; 
+    font-size: 14px;
+    max-height: 60vh;
   }
 
   .inputArea {
@@ -624,8 +646,9 @@ input:checked + .slider:before {
     padding: 10px;
   }
 
-  .leftSection, .rightSection {
-    flex: 1; 
+  .leftSection,
+  .rightSection {
+    flex: 1;
     padding: 10px;
   }
 
@@ -669,14 +692,15 @@ input:checked + .slider:before {
     width: 100%;
     border-collapse: collapse;
     overflow-x: auto;
-    display: block; 
+    display: block;
   }
 
-  .table th, .table td {
+  .table th,
+  .table td {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
-    font-size: 12px; 
+    font-size: 12px;
     display: block;
     width: 100%;
     text-align: right;
@@ -696,7 +720,8 @@ input:checked + .slider:before {
     border-bottom: 2px solid #ddd;
   }
 
-  .table th::before, .table td::before {
+  .table th::before,
+  .table td::before {
     content: attr(data-label);
     position: absolute;
     left: 10px;
