@@ -351,6 +351,10 @@ input:checked + .slider:before {
   outline: none;
 }
 
+.inputField:hover {
+  color: #0D47A1;
+}
+
 /* Send Button */
 .sendButton {
   padding: 8px 16px;

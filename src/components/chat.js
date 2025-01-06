@@ -4,12 +4,14 @@ import styles from '../styles/Chat.module.css';
 export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
   const [messages, setMessages] = useState({});
-  const [input, setInput] = useState({});
+  const [input, setInput] = useState(''); // Ensures input is a string
   const [activeToggle, setActiveToggle] = useState(null);
   const [isExpanded, setIsExpanded] = useState({}); // To manage expansion per bot
   const [isSecondExpanded, setIsSecondExpanded] = useState({}); // To manage second expansion
-  const [chatHistory, setChatHistory] = useState({}); // State for chat histories
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar visibility state
+  const [chatHistory, setChatHistory] = useState({});
+  const [chatSessions, setChatSessions] = useState([]); // Initialize as an empty array
+  const [activeChat, setActiveChat] = useState(1);
 
   const layoutClasses = {
     1: styles.layout1,
@@ -21,24 +23,93 @@ export default function HomePage() {
     setOpenBot(openBot === bot ? null : bot);
   };
 
-  const handleSendMessage = (bot) => {
-    if (input[bot]?.trim()) {
-      const newMessage = { text: input[bot] };
+
+  const handleSendMessage = () => {
+    const inputString = String(input); // Ensure input is a string
+    if (inputString.trim()) {
+      const newMessage = { text: inputString };
+  
+      // Ensure "Session 1" is created if it doesn't exist
+      if (!Array.isArray(chatSessions)) {
+        setChatSessions([1]); // Reset to an array with "Session 1"
+      } else if (!chatSessions.includes(1)) {
+        setChatSessions([...chatSessions, 1]); // Add "Session 1" to the list
+      }
+  
+      // Set "Session 1" as active if no session is active
+      if (!activeChat) {
+        setActiveChat(1);
+      }
+  
+      // Update messages for the specific bot and session
       const updatedMessages = {
         ...messages,
-        [bot]: [...(messages[bot] || []), newMessage],
+        [openBot]: {
+          ...(messages[openBot] || {}),
+          [activeChat || 1]: [
+            ...(messages[openBot]?.[activeChat || 1] || []),
+            newMessage,
+          ],
+        },
       };
+  
+      // Update chat history for the specific bot and session
       const updatedHistory = {
         ...chatHistory,
-        [bot]: [...(chatHistory[bot] || []), newMessage],
+        [openBot]: {
+          ...(chatHistory[openBot] || {}),
+          [activeChat || 1]: [
+            ...(chatHistory[openBot]?.[activeChat || 1] || []),
+            newMessage,
+          ],
+        },
       };
-
+  
       setMessages(updatedMessages);
       setChatHistory(updatedHistory);
-      setInput({ ...input, [bot]: '' });
+      setInput(''); // Reset input field
     }
   };
+  
 
+
+  const handleFileUpload = (bot, event) => {
+    const file = event.target.files[0]; // Get the uploaded file
+    if (file) {
+      // Simulate file upload (or replace with your own upload logic)
+      const uploadUrl = `/uploads/${file.name}`; // Example URL for the uploaded file
+  
+      const newMessage = {
+        fileName: file.name,
+        fileUrl: uploadUrl, // File URL for download/view
+      };
+  
+      // Update messages for the specific bot and session
+      const updatedMessages = {
+        ...messages,
+        [bot]: {
+          ...(messages[bot] || {}),
+          [activeChat]: [...(messages[bot]?.[activeChat] || []), newMessage],
+        },
+      };
+  
+      // Update chat history for the specific bot and session
+      const updatedHistory = {
+        ...chatHistory,
+        [bot]: {
+          ...(chatHistory[bot] || {}),
+          [activeChat]: [...(chatHistory[bot]?.[activeChat] || []), newMessage],
+        },
+      };
+  
+      setMessages(updatedMessages);
+      setChatHistory(updatedHistory);
+  
+      // Reset the file input field
+      event.target.value = '';
+    }
+  };
+  
   const handleToggleClick = (toggle) => {
     setActiveToggle(activeToggle === toggle ? null : toggle);
   };
@@ -62,8 +133,34 @@ export default function HomePage() {
   };
 
   const handleAddNewChat = () => {
-    alert('New Chat feature coming soon!'); // Placeholder for actual functionality
+    // Determine the next session number based on existing sessions
+    const nextSessionId =
+      Array.isArray(chatSessions) && chatSessions.length > 0
+        ? Math.max(...chatSessions) + 1
+        : 1;
+  
+    // Add the new session to the chatSessions list and set it as active
+    setChatSessions([...chatSessions, nextSessionId]);
+    setActiveChat(nextSessionId);
+  
+    // Optionally, initialize messages and history for the new session
+    setMessages((prevMessages) => ({
+      ...prevMessages,
+      [openBot]: {
+        ...(prevMessages[openBot] || {}),
+        [nextSessionId]: [],
+      },
+    }));
+    setChatHistory((prevHistory) => ({
+      ...prevHistory,
+      [openBot]: {
+        ...(prevHistory[openBot] || {}),
+        [nextSessionId]: [],
+      },
+    }));
   };
+  
+  
 
   const handleCloseHistory = () => {
     setIsSidebarOpen(false); // Closes chat history when header is clicked
@@ -107,12 +204,16 @@ export default function HomePage() {
               </button>
             </div>
             <div className={styles.historyList}>
-              {(chatHistory[openBot] || []).map((msg, index) => (
-                <div key={index} className={styles.historyItem}>
-                  {msg.text}
-                </div>
-              ))}
-            </div>
+            {Array.isArray(chatSessions) && chatSessions.map((sessionId) => (    
+              <div
+      key={sessionId}
+      className={styles.historyItem}
+      onClick={() => setActiveChat(sessionId)} // Set active chat on click
+    >
+      {`Session ${sessionId}`}
+    </div>
+  ))}
+</div>
           </div>
         )}
 
@@ -150,12 +251,22 @@ export default function HomePage() {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       </p>
                       <div className={styles.messageList}>
-                        {(messages[openBot] || []).map((msg, index) => (
-                          <p key={index} className={styles.messageItem}>
-                            {msg.text || 'Uploaded File'}
-                          </p>
-                        ))}
-                      </div>
+  {(messages[openBot]?.[activeChat] || []).map((msg, index) => (
+    <p key={index} className={styles.messageItem}>
+      {msg.text || (
+        <a
+          href={msg.fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.fileLink}
+        >
+          {msg.fileName}
+        </a>
+      )}
+    </p>
+  ))}
+</div>
+
                     </div>
                   )}
 
@@ -361,48 +472,37 @@ export default function HomePage() {
 
             {openBot === bot && (
               <div className={styles.chatBox}>
-                <div className={styles.chatContainer}>
-                  <div className={styles.chatMessages}>
-                    {(messages[bot] || []).map((msg, index) => (
-                      <div key={index} className={styles.message}>
-                        {msg.text ? (
-                          msg.text
-                        ) : (
-                          <a
-                            href={`/uploads/${msg.fileName}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.fileLink}
-                          >
-                            View Uploaded File
-                          </a>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className={styles.inputArea}>
-                    <input
-                      type="text"
-                      className={styles.inputField}
-                      value={input[bot] || ''}
-                      onChange={(e) =>
-                        setInput({ ...input, [bot]: e.target.value })
-                      }
-                      placeholder="Type a message..."
-                    />
-                    <input
+<div className={styles.chatContainer}>
+<div className={styles.chatMessages}>
+  {(messages[openBot]?.[activeChat] || []).map((msg, index) => (
+    <div key={index} className={styles.message}>
+      {msg.text || 'Uploaded File'}
+    </div>
+  ))}
+</div>
+
+  <div className={styles.inputArea}>
+    <input
+      type="text"
+      className={styles.inputField}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      placeholder="Type a message..."
+    />
+                        <input
                       type="file"
                       className={styles.fileUpload}
                       onChange={(e) => handleFileUpload(bot, e)}
                     />
-                    <button
-                      className={styles.sendButton}
-                      onClick={() => handleSendMessage(bot)}
-                    >
-                      Send
-                    </button>
-                  </div>
-                </div>
+    <button
+      className={styles.sendButton}
+      onClick={handleSendMessage}
+    >
+      Send
+    </button>
+  </div>
+</div>
+
               </div>
             )}
           </div>
