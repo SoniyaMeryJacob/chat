@@ -218,25 +218,31 @@ export default function HomePage() {
               </button>
             </div>
             <div className={styles.historyList}>
-              {Array.isArray(chatSessions) &&
-                chatSessions.map((sessionId) => (
-                  <div
-                    key={sessionId}
-                    className={styles.historyItem}
-                    onClick={() => setActiveChat(sessionId)} // Set active chat on click
-                  >
-                    {`Session ${sessionId}`}
-                    {/* Add delete button */}
-                    <button
-                      className={styles.deleteButton}
-                      onClick={() => handleDeleteSession(sessionId)}
-                      aria-label="Delete Chat Session"
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                ))}
-            </div>
+  {Array.isArray(chatSessions) &&
+    chatSessions.map((sessionId) => (
+      <div
+        key={sessionId}
+        className={styles.historyItem}
+        style={{
+          margin: '5px 0',
+          cursor: 'pointer',
+          color: activeChat === sessionId ? 'blue' : 'black', // Active session color change
+        }}
+        onClick={() => setActiveChat(sessionId)} // Set active chat on click
+      >
+        {`Session ${sessionId}`}
+        {/* Add delete button */}
+        <button
+          className={styles.deleteButton}
+          onClick={() => handleDeleteSession(sessionId)}
+          aria-label="Delete Chat Session"
+        >
+          🗑️
+        </button>
+      </div>
+    ))}
+</div>
+
           </div>
         )}
 
