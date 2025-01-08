@@ -185,6 +185,7 @@ export default function HomePage() {
 
   return (
     <div className={styles.homeContainer}>
+
       <div className={styles.leftSection}>
         {!isSidebarOpen && openBot && (
           <button
@@ -247,6 +248,7 @@ export default function HomePage() {
               {openBot === 1 && (
                 <>
                   <input
+                    id="text-entry"
                     type="text"
                     className={styles.textEntryField}
                     placeholder="Enter text here..."
@@ -347,6 +349,7 @@ export default function HomePage() {
                   )}
 
                   <input
+                    id="text"
                     type="text"
                     className={styles.textEntryField}
                     placeholder="Enter text here..."
@@ -481,6 +484,7 @@ export default function HomePage() {
 
                   {/* Input Field */}
                   <input
+                    id="text"
                     type="text"
                     className={styles.textEntryField}
                     placeholder="Enter text here..."
@@ -518,6 +522,7 @@ export default function HomePage() {
 
                   <div className={styles.inputArea}>
                     <input
+                      id={`input-${bot}`}
                       type="text"
                       className={styles.inputField}
                       value={input}
@@ -525,6 +530,7 @@ export default function HomePage() {
                       placeholder="Type a message..."
                     />
                     <input
+                      id={`file-upload-${bot}`}
                       type="file"
                       className={styles.fileUpload}
                       onChange={(e) => handleFileUpload(bot, e)}
