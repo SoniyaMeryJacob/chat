@@ -268,7 +268,7 @@ export default function HomePage() {
         {!openBot && <h1>RAG APP</h1>}
         {openBot && (
           <div className={`${styles.frame} ${layoutClasses[openBot]}`}>
-            <h2 className={styles.frameHeading}>Welcome to Chat {openBot}</h2>
+            <h2 className={styles.frameHeading}> Welcome to Session {activeChat} of Chat {openBot}</h2>
             <div className={styles.frameBody}>
               {openBot === 1 && (
                 <>
