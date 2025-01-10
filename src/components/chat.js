@@ -185,7 +185,6 @@ export default function HomePage() {
 
   return (
     <div className={styles.homeContainer}>
-
       <div className={styles.leftSection}>
         {!isSidebarOpen && openBot && (
           <button
@@ -218,31 +217,46 @@ export default function HomePage() {
               </button>
             </div>
             <div className={styles.historyList}>
-  {Array.isArray(chatSessions) &&
-    chatSessions.map((sessionId) => (
-      <div
-        key={sessionId}
-        className={styles.historyItem}
-        style={{
-          margin: '5px 0',
-          cursor: 'pointer',
-          color: activeChat === sessionId ? 'blue' : 'black', // Active session color change
-        }}
-        onClick={() => setActiveChat(sessionId)} // Set active chat on click
-      >
-        {`Session ${sessionId}`}
-        {/* Add delete button */}
-        <button
-          className={styles.deleteButton}
-          onClick={() => handleDeleteSession(sessionId)}
-          aria-label="Delete Chat Session"
-        >
-          🗑️
-        </button>
-      </div>
-    ))}
-</div>
+              {Array.isArray(chatSessions) &&
+                chatSessions.map((sessionId) => (
+                  <div
+                    key={sessionId}
+                    className={styles.historyItem}
+                    style={{
+                      margin: "5px 0",
+                      cursor: "pointer",
+                      color: activeChat === sessionId ? "blue" : "black", // Active session color change
+                    }}
+                    onClick={() => {
+                      setActiveChat(sessionId); // Switch to the selected session
 
+                      // Refresh the frame window by resetting state or ensuring UI reflects the session change
+                      const updatedMessages = {
+                        ...messages,
+                        [openBot]: {
+                          ...(messages[openBot] || {}),
+                          [sessionId]: messages[openBot]?.[sessionId] || [], // Ensure session has messages
+                        },
+                      };
+
+                      setMessages(updatedMessages);
+                    }}
+                  >
+                    {`Session ${sessionId}`}
+                    {/* Add delete button */}
+                    <button
+                      className={styles.deleteButton}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering session click
+                        handleDeleteSession(sessionId);
+                      }}
+                      aria-label="Delete Chat Session"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                ))}
+            </div>
           </div>
         )}
 
@@ -345,11 +359,22 @@ export default function HomePage() {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       </p>
                       <div className={styles.messageList}>
-                        {(messages[openBot] || []).map((msg, index) => (
-                          <p key={index} className={styles.messageItem}>
-                            {msg.text || "Uploaded File"}
-                          </p>
-                        ))}
+                        {(messages[openBot]?.[activeChat] || []).map(
+                          (msg, index) => (
+                            <p key={index} className={styles.messageItem}>
+                              {msg.text || (
+                                <a
+                                  href={msg.fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={styles.fileLink}
+                                >
+                                  {msg.fileName}
+                                </a>
+                              )}
+                            </p>
+                          )
+                        )}
                       </div>
                     </div>
                   )}
@@ -414,19 +439,27 @@ export default function HomePage() {
                         dolor pharetra. Donec scelerisque urna a felis congue,
                         in sodales justo suscipit.
                       </p>
-
-                      {/* Dynamic Messages */}
                       <div className={styles.messageList}>
-                        {(messages[openBot] || []).map((msg, index) => (
-                          <p key={index} className={styles.messageItem}>
-                            {msg.text || "Uploaded File"}
-                          </p>
-                        ))}
+                        {(messages[openBot]?.[activeChat] || []).map(
+                          (msg, index) => (
+                            <p key={index} className={styles.messageItem}>
+                              {msg.text || (
+                                <a
+                                  href={msg.fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={styles.fileLink}
+                                >
+                                  {msg.fileName}
+                                </a>
+                              )}
+                            </p>
+                          )
+                        )}
                       </div>
                     </div>
                   )}
 
-                  {/* Toggle Buttons in a Row */}
                   <div className={styles.toggleButtonsRow}>
                     <div className={styles.toggleSwitch}>
                       <input
@@ -463,7 +496,6 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Second Expand Button */}
                   <button
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(3)}
@@ -471,10 +503,8 @@ export default function HomePage() {
                     {isSecondExpanded[3] ? "Collapse" : "Expand"}
                   </button>
 
-                  {/* Second Expandable Content */}
                   {isSecondExpanded[3] && (
                     <div className={styles.secondExpandableField}>
-                      {/* Empty Table */}
                       <table className={styles.table}>
                         <thead>
                           <tr>
@@ -483,12 +513,11 @@ export default function HomePage() {
                             <th>Column 3</th>
                           </tr>
                         </thead>
-                        <tbody>{/* Empty Body */}</tbody>
+                        <tbody></tbody>
                       </table>
                     </div>
                   )}
 
-                  {/* Input Field */}
                   <input
                     id="text"
                     type="text"
