@@ -160,6 +160,24 @@ export default function HomePage() {
   const handleCloseHistory = () => {
     setIsSidebarOpen(false); // Closes chat history when header is clicked
   };
+  const handleSessionClick = (sessionId) => {
+    // Set the clicked session as active
+    setActiveChat(sessionId);
+
+    // Refresh chat window content by ensuring messages for the session are displayed
+    const updatedMessages = {
+      ...messages,
+      [openBot]: {
+        ...(messages[openBot] || {}),
+        [sessionId]: messages[openBot]?.[sessionId] || [], // Ensure session has messages
+      },
+    };
+
+    setMessages(updatedMessages);
+
+    // Optionally, perform a "refresh" action like re-rendering a component
+    setInput(""); // Clear the input field to reflect a clean state
+  };
 
   const handleDeleteSession = (sessionId) => {
     // Ask for confirmation before deleting the session
@@ -225,22 +243,9 @@ export default function HomePage() {
                     style={{
                       margin: "5px 0",
                       cursor: "pointer",
-                      color: activeChat === sessionId ? "blue" : "black", // Active session color change
+                      color: activeChat === sessionId ? "blue" : "black", // Highlight active session
                     }}
-                    onClick={() => {
-                      setActiveChat(sessionId); // Switch to the selected session
-
-                      // Refresh the frame window by resetting state or ensuring UI reflects the session change
-                      const updatedMessages = {
-                        ...messages,
-                        [openBot]: {
-                          ...(messages[openBot] || {}),
-                          [sessionId]: messages[openBot]?.[sessionId] || [], // Ensure session has messages
-                        },
-                      };
-
-                      setMessages(updatedMessages);
-                    }}
+                    onClick={() => handleSessionClick(sessionId)} // Use a separate handler for session click
                   >
                     {`Session ${sessionId}`}
                     {/* Add delete button */}
