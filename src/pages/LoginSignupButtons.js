@@ -34,6 +34,7 @@ const LoginSignupButtons = ({ onLoginSuccess }) => {
     <div className={styles.container}>
       <h1>Login Page</h1>
       <input
+        id="text"
         type="text"
         placeholder="Username"
         value={username}
@@ -41,6 +42,7 @@ const LoginSignupButtons = ({ onLoginSuccess }) => {
         className={styles.inputField}
       />
       <input
+        id="password"
         type="password"
         placeholder="Password"
         value={password}
