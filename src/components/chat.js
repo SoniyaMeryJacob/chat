@@ -1,5 +1,7 @@
+//chat.js
 import React, { useState } from "react";
 import styles from "../styles/Chat.module.css";
+import { useRouter } from "next/router";
 
 export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
@@ -18,6 +20,8 @@ export default function HomePage() {
     2: styles.layout2,
     3: styles.layout3,
   };
+
+
 
   const toggleBot = (bot) => {
     setOpenBot(openBot === bot ? null : bot);
@@ -203,6 +207,7 @@ export default function HomePage() {
 
   return (
     <div className={styles.homeContainer}>
+
       <div className={styles.leftSection}>
         {!isSidebarOpen && openBot && (
           <button
@@ -268,7 +273,10 @@ export default function HomePage() {
         {!openBot && <h1>RAG APP</h1>}
         {openBot && (
           <div className={`${styles.frame} ${layoutClasses[openBot]}`}>
-            <h2 className={styles.frameHeading}> Welcome to Session {activeChat} of Chat {openBot}</h2>
+            <h2 className={styles.frameHeading}>
+              {" "}
+              Welcome to Session {activeChat} of Chat {openBot}
+            </h2>
             <div className={styles.frameBody}>
               {openBot === 1 && (
                 <>
