@@ -1,7 +1,6 @@
 //chat.js
 import React, { useState } from "react";
 import styles from "../styles/Chat.module.css";
-import { useRouter } from "next/router";
 
 export default function HomePage() {
   const [openBot, setOpenBot] = useState(null);
@@ -14,6 +13,15 @@ export default function HomePage() {
   const [chatHistory, setChatHistory] = useState({});
   const [chatSessions, setChatSessions] = useState([]); // Initialize as an empty array
   const [activeChat, setActiveChat] = useState(1);
+  const [selectedFiles, setSelectedFiles] = useState({});
+
+  const handleFileChange = (bot, event) => {
+    const file = event.target.files[0];
+    setSelectedFiles((prev) => ({
+      ...prev,
+      [bot]: file ? file.name : null,
+    }));
+  };
 
   const layoutClasses = {
     1: styles.layout1,
@@ -21,15 +29,14 @@ export default function HomePage() {
     3: styles.layout3,
   };
 
-
-
   const toggleBot = (bot) => {
     setOpenBot(openBot === bot ? null : bot);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e) => {
     const inputString = String(input); // Ensure input is a string
-    if (inputString.trim()) {
+
+    if ((e.key === "Enter" || !e.key) && inputString.trim()) {
       const newMessage = { text: inputString };
 
       // Ensure "Session 1" is created if it doesn't exist
@@ -55,7 +62,6 @@ export default function HomePage() {
           ],
         },
       };
-
       // Update chat history for the specific bot and session
       const updatedHistory = {
         ...chatHistory,
@@ -67,47 +73,35 @@ export default function HomePage() {
           ],
         },
       };
-
       setMessages(updatedMessages);
       setChatHistory(updatedHistory);
       setInput(""); // Reset input field
     }
   };
 
-  const handleFileUpload = (bot, event) => {
-    const file = event.target.files[0]; // Get the uploaded file
-    if (file) {
-      // Simulate file upload (or replace with your own upload logic)
-      const uploadUrl = `/uploads/${file.name}`; // Example URL for the uploaded file
-
-      const newMessage = {
-        fileName: file.name,
-        fileUrl: uploadUrl, // File URL for download/view
-      };
+  const handleUpload = (bot) => {
+    if (selectedFiles[bot]) {
+      const fileName = selectedFiles[bot];
+      const fileMessage = { fileName, fileUrl: `/uploads/${fileName}` }; // Example URL for file download/view
 
       // Update messages for the specific bot and session
       const updatedMessages = {
         ...messages,
         [bot]: {
           ...(messages[bot] || {}),
-          [activeChat]: [...(messages[bot]?.[activeChat] || []), newMessage],
-        },
-      };
-
-      // Update chat history for the specific bot and session
-      const updatedHistory = {
-        ...chatHistory,
-        [bot]: {
-          ...(chatHistory[bot] || {}),
-          [activeChat]: [...(chatHistory[bot]?.[activeChat] || []), newMessage],
+          [activeChat]: [...(messages[bot]?.[activeChat] || []), fileMessage],
         },
       };
 
       setMessages(updatedMessages);
-      setChatHistory(updatedHistory);
 
-      // Reset the file input field
-      event.target.value = "";
+      // Reset selected file after upload
+      setSelectedFiles((prev) => ({
+        ...prev,
+        [bot]: null,
+      }));
+
+      console.log(`Uploaded file for BOT ${bot}: ${fileName}`);
     }
   };
 
@@ -207,7 +201,6 @@ export default function HomePage() {
 
   return (
     <div className={styles.homeContainer}>
-
       <div className={styles.leftSection}>
         {!isSidebarOpen && openBot && (
           <button
@@ -281,10 +274,13 @@ export default function HomePage() {
               {openBot === 1 && (
                 <>
                   <input
-                    id="text-entry"
+                    id="text-msg"
                     type="text"
-                    className={styles.textEntryField}
-                    placeholder="Enter text here..."
+                    placeholder="Type your message..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleSendMessage}
+                    className={styles.inputField}
                   />
 
                   <div className={styles.chat1Buttons}>
@@ -304,9 +300,6 @@ export default function HomePage() {
 
                   {isExpanded[1] && (
                     <div className={styles.expandContent}>
-                      <p className={styles.loremText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
                       <div className={styles.messageList}>
                         {(messages[openBot]?.[activeChat] || []).map(
                           (msg, index) => (
@@ -343,16 +336,40 @@ export default function HomePage() {
                     </div>
                   )}
 
-                  <div className={styles.toggleButtonsContainer}>
-                    {["Toggle 1", "Toggle 2", "Toggle 3"].map((toggle) => (
-                      <div
-                        key={toggle}
-                        className={`${styles.toggleSwitch} ${
-                          activeToggle === toggle ? styles.active : ""
-                        }`}
-                        onClick={() => handleToggleClick(toggle)}
-                      ></div>
-                    ))}
+                  <div className={styles.toggleButtonsRow}>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle1"
+                        onChange={() => handleToggleClick("Toggle 1")}
+                      />
+                      <label
+                        htmlFor="toggle1"
+                        className={styles.slider}
+                      ></label>
+                    </div>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle2"
+                        onChange={() => handleToggleClick("Toggle 2")}
+                      />
+                      <label
+                        htmlFor="toggle2"
+                        className={styles.slider}
+                      ></label>
+                    </div>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle3"
+                        onChange={() => handleToggleClick("Toggle 3")}
+                      />
+                      <label
+                        htmlFor="toggle3"
+                        className={styles.slider}
+                      ></label>
+                    </div>
                   </div>
                 </>
               )}
@@ -368,9 +385,6 @@ export default function HomePage() {
 
                   {isExpanded[2] && (
                     <div className={styles.expandContent}>
-                      <p className={styles.loremText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
                       <div className={styles.messageList}>
                         {(messages[openBot]?.[activeChat] || []).map(
                           (msg, index) => (
@@ -393,22 +407,49 @@ export default function HomePage() {
                   )}
 
                   <input
-                    id="text"
+                    id="text-msg"
                     type="text"
-                    className={styles.textEntryField}
-                    placeholder="Enter text here..."
+                    placeholder="Type your message..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleSendMessage}
+                    className={styles.inputField}
                   />
 
-                  <div className={styles.toggleButtonsContainer}>
-                    {["Toggle 1", "Toggle 2", "Toggle 3"].map((toggle) => (
-                      <div
-                        key={toggle}
-                        className={`${styles.toggleSwitch} ${
-                          activeToggle === toggle ? styles.active : ""
-                        }`}
-                        onClick={() => handleToggleClick(toggle)}
-                      ></div>
-                    ))}
+                  <div className={styles.toggleButtonsRow}>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle1"
+                        onChange={() => handleToggleClick("Toggle 1")}
+                      />
+                      <label
+                        htmlFor="toggle1"
+                        className={styles.slider}
+                      ></label>
+                    </div>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle2"
+                        onChange={() => handleToggleClick("Toggle 2")}
+                      />
+                      <label
+                        htmlFor="toggle2"
+                        className={styles.slider}
+                      ></label>
+                    </div>
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        type="checkbox"
+                        id="toggle3"
+                        onChange={() => handleToggleClick("Toggle 3")}
+                      />
+                      <label
+                        htmlFor="toggle3"
+                        className={styles.slider}
+                      ></label>
+                    </div>
                   </div>
 
                   <button
@@ -446,12 +487,6 @@ export default function HomePage() {
 
                   {isExpanded[3] && (
                     <div className={styles.expandContent}>
-                      <p className={styles.loremText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Curabitur dignissim elit vel augue tempor, id sagittis
-                        dolor pharetra. Donec scelerisque urna a felis congue,
-                        in sodales justo suscipit.
-                      </p>
                       <div className={styles.messageList}>
                         {(messages[openBot]?.[activeChat] || []).map(
                           (msg, index) => (
@@ -532,10 +567,13 @@ export default function HomePage() {
                   )}
 
                   <input
-                    id="text"
+                    id="text-msg"
                     type="text"
-                    className={styles.textEntryField}
-                    placeholder="Enter text here..."
+                    placeholder="Type your message..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleSendMessage}
+                    className={styles.inputField}
                   />
                 </>
               )}
@@ -557,39 +595,21 @@ export default function HomePage() {
 
             {openBot === bot && (
               <div className={styles.chatBox}>
-                <div className={styles.chatContainer}>
-                  <div className={styles.chatMessages}>
-                    {(messages[openBot]?.[activeChat] || []).map(
-                      (msg, index) => (
-                        <div key={index} className={styles.message}>
-                          {msg.text || "Uploaded File"}
-                        </div>
-                      )
-                    )}
-                  </div>
-
-                  <div className={styles.inputArea}>
-                    <input
-                      id={`input-${bot}`}
-                      type="text"
-                      className={styles.inputField}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="Type a message..."
-                    />
-                    <input
-                      id={`file-upload-${bot}`}
-                      type="file"
-                      className={styles.fileUpload}
-                      onChange={(e) => handleFileUpload(bot, e)}
-                    />
+                <div className={styles.inputArea}>
+                  <input
+                    id={`filename-${bot}`}
+                    type="file"
+                    className={styles.fileUpload}
+                    onChange={(e) => handleFileChange(bot, e)}
+                  />
+                  {selectedFiles[bot] && (
                     <button
-                      className={styles.sendButton}
-                      onClick={handleSendMessage}
+                      className={styles.uploadButton}
+                      onClick={(event) => handleUpload(bot, event)}
                     >
-                      Send
+                      Upload
                     </button>
-                  </div>
+                  )}
                 </div>
               </div>
             )}

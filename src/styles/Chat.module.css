@@ -1,4 +1,3 @@
-
 .deleteButton {
   position: relative;
   left: 130px;
@@ -164,24 +163,6 @@
 }
 
 /* ---------------------------------------------------------------------------------------------------------------*/
-/* Chat Specific Styles */
-.chat2FrameBody .expandButton {
-  background-color: blue;
-  color: white;
-  margin: 10px 0;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.chat2FrameBody .textEntryField {
-  margin: 10px 0;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 
 /* Dynamic layouts */
 .layout1 .frameBody {
@@ -190,35 +171,16 @@
   align-items: center;
 }
 
-.layout1 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 10px;
-}
-
 .layout2 .frameBody {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.layout2 .toggleButtonsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
 .layout3 .frameBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.layout3 .toggleButtonsContainer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
 }
 
 .toggleButtonsRow {
@@ -261,16 +223,6 @@ input:checked + .slider:before {
   transform: translateX(25px);
 }
 
-.textEntryField {
-  font-size: 14px;
-  box-sizing: border-box;
-  margin-top: 10px;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .chat1Buttons {
   display: flex;
   gap: 10px;
@@ -295,35 +247,8 @@ input:checked + .slider:before {
   transition: background-color 0.3s ease;
 }
 
-.toggleCircle {
-  width: 21px;
-  height: 21px;
-  background-color: #fff; /* White toggle */
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: left 0.3s ease;
-}
-
-.toggleSwitch.active .toggleCircle {
-  left: 27px;
-}
 /*--------------------------------------------------------------------------------------------------------------*/
 
-/* Chat Container */
-.chatContainer {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-height: 90vh;
-  border: 1px solid #bce0fd; /* Light Gray */
-  border-radius: 8px;
-  background-color: #e3f2fd; /* White Background */
-  margin: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 /* Chat Box for Messages */
 .chatBox {
   font-size: 12px;
@@ -338,16 +263,6 @@ input:checked + .slider:before {
   color: #0d47a1;
   max-height: 70vh; /* Limit chat box height */
   overflow-y: auto; /* Add scroll for long messages */
-}
-
-/* Message */
-.message {
-  background-color: #ffffff80; /* Light Gray Background */
-  color: #0d47a1; /* Dark Gray-Blue Text */
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
 }
 
 /* Input Area */
@@ -380,20 +295,26 @@ input:checked + .slider:before {
   color: #0d47a1;
 }
 
-/* Send Button */
-.sendButton {
+.uploadButton {
+  display: inline-block;
+  margin-top: 10px; /* Space between label and button */
   padding: 8px 16px;
-  background: #0d6efd;
-  color: white;
+  background-color: #28a745; /* Green background */
+  color: white; /* Text color */
+  font-size: 14px;
+  font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 14px;
 }
 
-.sendButton:hover {
-  background-color: #0b5ed7; /* Hover Effect - Light Cyan */
+.uploadButton:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.uploadButton:active {
+  background-color: #1e7e34; /* Even darker green when active */
 }
 
 /* File Upload Link */
@@ -481,15 +402,6 @@ input:checked + .slider:before {
   color: #d9f1ff; /* Light Blue */
 }
 
-/* Toggle Container */
-.toggleButtonsContainer {
-  display: inline-flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
 /* Toggle Switch Circle (Optional if needed) */
 .toggleSwitch::before {
   content: "";
@@ -514,16 +426,10 @@ input:checked + .slider:before {
 
 .expandContent {
   margin-top: 10px;
-  padding: 10px;
+  padding: 10px 50px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f9f9f9;
-}
-
-.loremText {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
 }
 
 .messageList {
@@ -553,10 +459,6 @@ input:checked + .slider:before {
   background-color: #0056b3;
 }
 
-.textEntryField:focus {
-  border-color: #007bff;
-  outline: none;
-}
 .secondExpandableField {
   display: flexbox;
   background-color: #e2e2e2;
@@ -627,12 +529,6 @@ input:checked + .slider:before {
 
   .inputField {
     margin-bottom: 0;
-    font-size: 14px;
-  }
-
-  .sendButton {
-    width: auto;
-    padding: 10px;
     font-size: 14px;
   }
 
@@ -730,30 +626,8 @@ input:checked + .slider:before {
     font-weight: bold;
   }
 
-  .toggleButtonsContainer {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
   .toggleSwitch {
     width: 40px;
     height: 20px;
-  }
-
-  .toggleCircle {
-    width: 16px;
-    height: 16px;
-  }
-
-  .message {
-    padding: 8px 10px;
-    font-size: 12px;
-    flex-direction: column;
-  }
-
-  .textEntryField {
-    padding: 10px;
-    font-size: 14px;
   }
 }
