@@ -128,16 +128,14 @@ export default function HomePage() {
   };
 
   const handleAddNewChat = () => {
-    // Determine the next session number based on existing sessions
     const nextSessionId =
       Array.isArray(chatSessions) && chatSessions.length > 0
         ? Math.max(...chatSessions) + 1
         : 1;
-
-    // Add the new session to the chatSessions list and set it as active
+  
     setChatSessions([...chatSessions, nextSessionId]);
     setActiveChat(nextSessionId);
-
+  
     // Optionally, initialize messages and history for the new session
     setMessages((prevMessages) => ({
       ...prevMessages,
@@ -154,6 +152,7 @@ export default function HomePage() {
       },
     }));
   };
+  
 
   const handleCloseHistory = () => {
     setIsSidebarOpen(false); // Closes chat history when header is clicked
@@ -178,17 +177,14 @@ export default function HomePage() {
   };
 
   const handleDeleteSession = (sessionId) => {
-    // Ask for confirmation before deleting the session
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this chat?"
     );
 
     if (confirmDelete) {
-      // Filter out the session to delete it
       const updatedSessions = chatSessions.filter((id) => id !== sessionId);
       setChatSessions(updatedSessions);
 
-      // Remove messages and history associated with this session
       const updatedMessages = { ...messages };
       delete updatedMessages[openBot]?.[sessionId];
       setMessages(updatedMessages);
@@ -198,18 +194,19 @@ export default function HomePage() {
       setChatHistory(updatedHistory);
     }
   };
-
+  const isHidden = false; // Replace this with your actual hiding condition
   return (
     <div className={styles.homeContainer}>
       <div className={styles.leftSection}>
         {!isSidebarOpen && openBot && (
           <button
-            className={styles.sidebarToggleIcon}
-            onClick={handleToggleSidebar}
-            aria-label="Toggle Chat History"
-          >
-            ☰
-          </button>
+  className={styles.sidebarToggleIcon}
+  onClick={handleToggleSidebar}
+  aria-label={isSidebarOpen ? "Close Chat History" : "Open Chat History"}
+>
+  {isSidebarOpen ? "×" : "☰"}  {/* Toggle icon based on state */}
+</button>
+
         )}
 
         {/* Sidebar for Chat History */}
@@ -248,15 +245,19 @@ export default function HomePage() {
                     {`Session ${sessionId}`}
                     {/* Add delete button */}
                     <button
-                      className={styles.deleteButton}
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering session click
-                        handleDeleteSession(sessionId);
-                      }}
-                      aria-label="Delete Chat Session"
-                    >
-                      🗑️
-                    </button>
+      className={styles.deleteButton}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleDeleteSession(sessionId);
+      }}
+      aria-label="Delete Chat Session"
+      tabIndex={isHidden ? -1 : 0}
+      aria-hidden={isHidden ? "true" : "false"}
+      style={{ display: isHidden ? "none" : "inline" }}
+    >
+      🗑️
+    </button>
+
                   </div>
                 ))}
             </div>
