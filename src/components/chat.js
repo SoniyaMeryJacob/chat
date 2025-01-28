@@ -73,50 +73,73 @@ export default function HomePage() {
     }
   };
 
-  const handleUpload = (bot, fileCategory) => {
+  const handleUpload = async (bot, fileCategory) => {
     const fileKey = `${bot}-${fileCategory}`;
-    const fileName = selectedFiles[fileKey];
-    if (fileName) {
-      const fileMessage = {
-        fileName,
-        fileUrl: `/uploads/${fileName}`,
-        category: `File ${fileCategory}`,
-      };
-      const updatedMessages = {
-        ...messages,
-        [bot]: {
-          ...(messages[bot] || {}),
-          [activeChat]: [...(messages[bot]?.[activeChat] || []), fileMessage],
-        },
-      };
-      setMessages(updatedMessages);
-      const updatedHistory = {
-        ...chatHistory,
-        [bot]: {
-          ...(chatHistory[bot] || {}),
-          [activeChat]: [
-            ...(chatHistory[bot]?.[activeChat] || []),
-            fileMessage,
-          ],
-        },
-      };
-      setChatHistory(updatedHistory);
-      setSelectedFiles((prev) => ({
-        ...prev,
-        [fileKey]: null,
-      }));
+    const file = selectedFiles[fileKey];
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        const fileMessage = {
+          fileId: result.fileId,
+          fileUrl: `/api/files/${result.fileId}`,
+          fileName: file.name,
+          category: `File ${fileCategory}`,
+        };
+
+        const updatedMessages = {
+          ...messages,
+          [bot]: {
+            ...(messages[bot] || {}),
+            [activeChat]: [...(messages[bot]?.[activeChat] || []), fileMessage],
+          },
+        };
+        setMessages(updatedMessages);
+
+        const updatedHistory = {
+          ...chatHistory,
+          [bot]: {
+            ...(chatHistory[bot] || {}),
+            [activeChat]: [
+              ...(chatHistory[bot]?.[activeChat] || []),
+              fileMessage,
+            ],
+          },
+        };
+        setChatHistory(updatedHistory);
+
+        // Clear the file input
+        setSelectedFiles((prev) => ({
+          ...prev,
+          [fileKey]: null,
+        }));
+      } else {
+        alert(`Upload failed: ${result.error}`);
+      }
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      alert("An error occurred during file upload.");
     }
   };
 
   const handleFileChange = (bot, event, fileCategory) => {
     const file = event.target.files[0];
-    console.log(
-      `File Selected for Bot ${bot}, Category ${fileCategory}:`,
-      file
-    );
     setSelectedFiles((prev) => ({
       ...prev,
-      [`${bot}-${fileCategory}`]: file ? file.name : null,
+      [`${bot}-${fileCategory}`]: file, // Store the file object instead of just the name
     }));
   };
 
@@ -288,7 +311,7 @@ export default function HomePage() {
               Welcome to Session {activeChat} of Chat {openBot}
             </h2>
             <div className={styles.frameBody}>
-{/*----------------------------------------------------CHAT1---------------------------------------------------------- */} 
+              {/*----------------------------------------------------CHAT1---------------------------------------------------------- */}
               {openBot === 1 && (
                 <>
                   <input
@@ -360,7 +383,7 @@ export default function HomePage() {
                         .map((msg, index) => (
                           <p key={index} className={styles.messageItem}>
                             <a
-                              href={msg.fileUrl}
+                              href={msg.fileUrl} // File retrieved from MongoDB via API
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -370,17 +393,17 @@ export default function HomePage() {
                         ))}
                     </div>
                   )}
+
                   {isForthExpanded[1] && (
                     <div className={styles.expandContent}>
                       {messages[openBot]?.[activeChat]
-                        ?.filter((msg) => msg.category === "File 2")
+                        ?.filter((msg) => msg.category === "File 2") // Matches "File 2" category
                         .map((msg, index) => (
                           <p key={index} className={styles.messageItem}>
                             <a
-                              href={msg.fileUrl}
+                              href={msg.fileUrl} // File retrieved from MongoDB via API
                               target="_blank"
                               rel="noopener noreferrer"
-                              className={styles.fileLink}
                             >
                               {msg.fileName}
                             </a>
@@ -425,7 +448,7 @@ export default function HomePage() {
                   </div>
                 </>
               )}
-{/*----------------------------------------------------CHAT2---------------------------------------------------------- */} 
+              {/*----------------------------------------------------CHAT2---------------------------------------------------------- */}
               {openBot === 2 && (
                 <>
                   <button
@@ -522,7 +545,7 @@ export default function HomePage() {
                   )}
                 </>
               )}
-{/*----------------------------------------------------CHAT3---------------------------------------------------------- */} 
+              {/*----------------------------------------------------CHAT3---------------------------------------------------------- */}
               {openBot === 3 && (
                 <>
                   <button
@@ -623,7 +646,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
-{/*----------------------------------------------------RIGHT SECTION-------------------------------------------------- */} 
+      {/*----------------------------------------------------RIGHT SECTION-------------------------------------------------- */}
       <div className={styles.rightSection}>
         <h2 className={styles.botsHeader}>BOTS</h2>
         {[1, 2, 3].map((bot) => (
