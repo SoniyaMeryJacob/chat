@@ -9,19 +9,13 @@ export default function HomePage() {
   const [activeToggle, setActiveToggle] = useState(null);
   const [isExpanded, setIsExpanded] = useState({}); // To manage expansion per bot
   const [isSecondExpanded, setIsSecondExpanded] = useState({}); // To manage second expansion
+  const [isThirdExpanded, setIsThirdExpanded] = useState({}); // To manage third expansion
+  const [isForthExpanded, setIsForthExpanded] = useState({}); // To manage forth expansion});
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar visibility state
   const [chatHistory, setChatHistory] = useState({});
   const [chatSessions, setChatSessions] = useState([]); // Initialize as an empty array
   const [activeChat, setActiveChat] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState({});
-
-  const handleFileChange = (bot, event) => {
-    const file = event.target.files[0];
-    setSelectedFiles((prev) => ({
-      ...prev,
-      [bot]: file ? file.name : null,
-    }));
-  };
 
   const layoutClasses = {
     1: styles.layout1,
@@ -33,24 +27,24 @@ export default function HomePage() {
     setOpenBot(openBot === bot ? null : bot);
   };
 
+  const handleToggleClick = (toggle) => {
+    setActiveToggle(activeToggle === toggle ? null : toggle);
+  };
+
   const handleSendMessage = (e) => {
     const inputString = String(input); // Ensure input is a string
-
     if ((e.key === "Enter" || !e.key) && inputString.trim()) {
       const newMessage = { text: inputString };
-
       // Ensure "Session 1" is created if it doesn't exist
       if (!Array.isArray(chatSessions)) {
         setChatSessions([1]); // Reset to an array with "Session 1"
       } else if (!chatSessions.includes(1)) {
         setChatSessions([...chatSessions, 1]); // Add "Session 1" to the list
       }
-
       // Set "Session 1" as active if no session is active
       if (!activeChat) {
         setActiveChat(1);
       }
-
       // Update messages for the specific bot and session
       const updatedMessages = {
         ...messages,
@@ -79,12 +73,15 @@ export default function HomePage() {
     }
   };
 
-  const handleUpload = (bot) => {
-    if (selectedFiles[bot]) {
-      const fileName = selectedFiles[bot];
-      const fileMessage = { fileName, fileUrl: `/uploads/${fileName}` }; // Example URL for file download/view
-
-      // Update messages for the specific bot and session
+  const handleUpload = (bot, fileCategory) => {
+    const fileKey = `${bot}-${fileCategory}`;
+    const fileName = selectedFiles[fileKey];
+    if (fileName) {
+      const fileMessage = {
+        fileName,
+        fileUrl: `/uploads/${fileName}`,
+        category: `File ${fileCategory}`,
+      };
       const updatedMessages = {
         ...messages,
         [bot]: {
@@ -92,34 +89,62 @@ export default function HomePage() {
           [activeChat]: [...(messages[bot]?.[activeChat] || []), fileMessage],
         },
       };
-
       setMessages(updatedMessages);
-
-      // Reset selected file after upload
+      const updatedHistory = {
+        ...chatHistory,
+        [bot]: {
+          ...(chatHistory[bot] || {}),
+          [activeChat]: [
+            ...(chatHistory[bot]?.[activeChat] || []),
+            fileMessage,
+          ],
+        },
+      };
+      setChatHistory(updatedHistory);
       setSelectedFiles((prev) => ({
         ...prev,
-        [bot]: null,
+        [fileKey]: null,
       }));
-
-      console.log(`Uploaded file for BOT ${bot}: ${fileName}`);
     }
   };
 
-  const handleToggleClick = (toggle) => {
-    setActiveToggle(activeToggle === toggle ? null : toggle);
+  const handleFileChange = (bot, event, fileCategory) => {
+    const file = event.target.files[0];
+    console.log(
+      `File Selected for Bot ${bot}, Category ${fileCategory}:`,
+      file
+    );
+    setSelectedFiles((prev) => ({
+      ...prev,
+      [`${bot}-${fileCategory}`]: file ? file.name : null,
+    }));
   };
 
   const handleExpandToggle = (bot) => {
-    setIsExpanded({
-      ...isExpanded,
-      [bot]: !isExpanded[bot],
-    });
+    setIsExpanded((prev) => ({
+      ...prev,
+      [bot]: !prev[bot],
+    }));
   };
 
   const handleSecondExpandToggle = (bot) => {
     setIsSecondExpanded({
       ...isSecondExpanded,
       [bot]: !isSecondExpanded[bot],
+    });
+  };
+
+  const handleThirdExpandToggle = (bot) => {
+    setIsThirdExpanded({
+      ...isThirdExpanded,
+      [bot]: !isThirdExpanded[bot],
+    });
+  };
+
+  const handleForthExpandToggle = (bot) => {
+    setIsForthExpanded({
+      ...isForthExpanded,
+      [bot]: !isForthExpanded[bot],
     });
   };
 
@@ -133,11 +158,9 @@ export default function HomePage() {
       Array.isArray(chatSessions) && chatSessions.length > 0
         ? Math.max(...chatSessions) + 1
         : 1;
-
     // Add the new session to the chatSessions list and set it as active
     setChatSessions([...chatSessions, nextSessionId]);
     setActiveChat(nextSessionId);
-
     // Optionally, initialize messages and history for the new session
     setMessages((prevMessages) => ({
       ...prevMessages,
@@ -158,10 +181,10 @@ export default function HomePage() {
   const handleCloseHistory = () => {
     setIsSidebarOpen(false); // Closes chat history when header is clicked
   };
+
   const handleSessionClick = (sessionId) => {
     // Set the clicked session as active
     setActiveChat(sessionId);
-
     // Refresh chat window content by ensuring messages for the session are displayed
     const updatedMessages = {
       ...messages,
@@ -170,9 +193,7 @@ export default function HomePage() {
         [sessionId]: messages[openBot]?.[sessionId] || [], // Ensure session has messages
       },
     };
-
     setMessages(updatedMessages);
-
     // Optionally, perform a "refresh" action like re-rendering a component
     setInput(""); // Clear the input field to reflect a clean state
   };
@@ -182,17 +203,14 @@ export default function HomePage() {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this chat?"
     );
-
     if (confirmDelete) {
       // Filter out the session to delete it
       const updatedSessions = chatSessions.filter((id) => id !== sessionId);
       setChatSessions(updatedSessions);
-
       // Remove messages and history associated with this session
       const updatedMessages = { ...messages };
       delete updatedMessages[openBot]?.[sessionId];
       setMessages(updatedMessages);
-
       const updatedHistory = { ...chatHistory };
       delete updatedHistory[openBot]?.[sessionId];
       setChatHistory(updatedHistory);
@@ -217,7 +235,6 @@ export default function HomePage() {
           <div className={styles.sidebar}>
             <div className={styles.sidebarHeader}>
               <h3 onClick={handleCloseHistory}>Chat {openBot} History</h3>
-
               {/* + Icon to add new chat */}
               <button
                 className={styles.newChatButton}
@@ -271,6 +288,7 @@ export default function HomePage() {
               Welcome to Session {activeChat} of Chat {openBot}
             </h2>
             <div className={styles.frameBody}>
+{/*----------------------------------------------------CHAT1---------------------------------------------------------- */} 
               {openBot === 1 && (
                 <>
                   <input
@@ -282,45 +300,45 @@ export default function HomePage() {
                     onKeyDown={handleSendMessage}
                     className={styles.inputField}
                   />
-
                   <div className={styles.chat1Buttons}>
                     <button
                       className={styles.expandButton}
                       onClick={() => handleExpandToggle(1)}
                     >
-                      {isExpanded[1] ? "Collapse" : "Expand"}
+                      {isExpanded[1] ? "Collapse" : "Text"}
                     </button>
                     <button
                       className={styles.expandButton}
                       onClick={() => handleSecondExpandToggle(1)}
                     >
-                      {isSecondExpanded[1] ? "Collapse" : "Expand"}
+                      {isSecondExpanded[1] ? "Collapse" : "Table"}
+                    </button>
+                    <button
+                      className={styles.expandButton}
+                      onClick={() => handleThirdExpandToggle(1)}
+                    >
+                      {isThirdExpanded[1] ? "Collapse" : "File 1 "}
+                    </button>
+                    <button
+                      className={styles.expandButton}
+                      onClick={() => handleForthExpandToggle(1)}
+                    >
+                      {isForthExpanded[1] ? "Collapse" : "File 2"}
                     </button>
                   </div>
-
                   {isExpanded[1] && (
                     <div className={styles.expandContent}>
                       <div className={styles.messageList}>
-                        {(messages[openBot]?.[activeChat] || []).map(
-                          (msg, index) => (
+                        {messages[openBot]?.[activeChat]
+                          ?.filter((msg) => !msg.category) // Only text messages
+                          .map((msg, index) => (
                             <p key={index} className={styles.messageItem}>
-                              {msg.text || (
-                                <a
-                                  href={msg.fileUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={styles.fileLink}
-                                >
-                                  {msg.fileName}
-                                </a>
-                              )}
+                              {msg.text}
                             </p>
-                          )
-                        )}
+                          ))}
                       </div>
                     </div>
                   )}
-
                   {isSecondExpanded[1] && (
                     <div className={styles.secondExpandableField}>
                       <table className={styles.table}>
@@ -335,7 +353,41 @@ export default function HomePage() {
                       </table>
                     </div>
                   )}
-
+                  {isThirdExpanded[1] && (
+                    <div className={styles.expandContent}>
+                      {messages[openBot]?.[activeChat]
+                        ?.filter((msg) => msg.category === "File 1") // Matches "File 1" category
+                        .map((msg, index) => (
+                          <p key={index} className={styles.messageItem}>
+                            <a
+                              href={msg.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {msg.fileName}
+                            </a>
+                          </p>
+                        ))}
+                    </div>
+                  )}
+                  {isForthExpanded[1] && (
+                    <div className={styles.expandContent}>
+                      {messages[openBot]?.[activeChat]
+                        ?.filter((msg) => msg.category === "File 2")
+                        .map((msg, index) => (
+                          <p key={index} className={styles.messageItem}>
+                            <a
+                              href={msg.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.fileLink}
+                            >
+                              {msg.fileName}
+                            </a>
+                          </p>
+                        ))}
+                    </div>
+                  )}
                   <div className={styles.toggleButtonsRow}>
                     <div className={styles.toggleSwitch}>
                       <input
@@ -373,39 +425,37 @@ export default function HomePage() {
                   </div>
                 </>
               )}
-
+{/*----------------------------------------------------CHAT2---------------------------------------------------------- */} 
               {openBot === 2 && (
                 <>
                   <button
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(2)}
                   >
-                    {isExpanded[2] ? "Collapse" : "Expand"}
+                    {isExpanded[2] ? "Collapse" : "Text"}
                   </button>
-
-                  {isExpanded[2] && (
+                  {isExpanded[openBot] && openBot !== 1 && (
                     <div className={styles.expandContent}>
                       <div className={styles.messageList}>
-                        {(messages[openBot]?.[activeChat] || []).map(
-                          (msg, index) => (
-                            <p key={index} className={styles.messageItem}>
-                              {msg.text || (
-                                <a
-                                  href={msg.fileUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={styles.fileLink}
-                                >
-                                  {msg.fileName}
-                                </a>
-                              )}
-                            </p>
-                          )
-                        )}
+                        {messages[openBot]?.[activeChat]?.map((msg, index) => (
+                          <p key={index} className={styles.messageItem}>
+                            {msg.text ? (
+                              msg.text
+                            ) : (
+                              <a
+                                href={msg.fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.fileLink}
+                              >
+                                {msg.fileName}
+                              </a>
+                            )}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   )}
-
                   <input
                     id="text-msg"
                     type="text"
@@ -415,7 +465,6 @@ export default function HomePage() {
                     onKeyDown={handleSendMessage}
                     className={styles.inputField}
                   />
-
                   <div className={styles.toggleButtonsRow}>
                     <div className={styles.toggleSwitch}>
                       <input
@@ -451,14 +500,12 @@ export default function HomePage() {
                       ></label>
                     </div>
                   </div>
-
                   <button
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(2)}
                   >
-                    {isSecondExpanded[2] ? "Collapse" : "Expand"}
+                    {isSecondExpanded[2] ? "Collapse" : "Table"}
                   </button>
-
                   {isSecondExpanded[2] && (
                     <div className={styles.secondExpandableField}>
                       <table className={styles.table}>
@@ -475,39 +522,37 @@ export default function HomePage() {
                   )}
                 </>
               )}
-
+{/*----------------------------------------------------CHAT3---------------------------------------------------------- */} 
               {openBot === 3 && (
                 <>
                   <button
                     className={styles.expandButton}
                     onClick={() => handleExpandToggle(3)}
                   >
-                    {isExpanded[3] ? "Collapse" : "Expand"}
+                    {isExpanded[3] ? "Collapse" : "Text"}
                   </button>
-
-                  {isExpanded[3] && (
+                  {isExpanded[openBot] && openBot !== 1 && (
                     <div className={styles.expandContent}>
                       <div className={styles.messageList}>
-                        {(messages[openBot]?.[activeChat] || []).map(
-                          (msg, index) => (
-                            <p key={index} className={styles.messageItem}>
-                              {msg.text || (
-                                <a
-                                  href={msg.fileUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={styles.fileLink}
-                                >
-                                  {msg.fileName}
-                                </a>
-                              )}
-                            </p>
-                          )
-                        )}
+                        {messages[openBot]?.[activeChat]?.map((msg, index) => (
+                          <p key={index} className={styles.messageItem}>
+                            {msg.text ? (
+                              msg.text
+                            ) : (
+                              <a
+                                href={msg.fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.fileLink}
+                              >
+                                {msg.fileName}
+                              </a>
+                            )}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   )}
-
                   <div className={styles.toggleButtonsRow}>
                     <div className={styles.toggleSwitch}>
                       <input
@@ -543,14 +588,12 @@ export default function HomePage() {
                       ></label>
                     </div>
                   </div>
-
                   <button
                     className={styles.expandButton}
                     onClick={() => handleSecondExpandToggle(3)}
                   >
-                    {isSecondExpanded[3] ? "Collapse" : "Expand"}
+                    {isSecondExpanded[3] ? "Collapse" : "Table"}
                   </button>
-
                   {isSecondExpanded[3] && (
                     <div className={styles.secondExpandableField}>
                       <table className={styles.table}>
@@ -565,7 +608,6 @@ export default function HomePage() {
                       </table>
                     </div>
                   )}
-
                   <input
                     id="text-msg"
                     type="text"
@@ -581,7 +623,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
-
+{/*----------------------------------------------------RIGHT SECTION-------------------------------------------------- */} 
       <div className={styles.rightSection}>
         <h2 className={styles.botsHeader}>BOTS</h2>
         {[1, 2, 3].map((bot) => (
@@ -592,23 +634,81 @@ export default function HomePage() {
                 {openBot === bot ? "▲" : "▼"}
               </span>
             </div>
-
             {openBot === bot && (
               <div className={styles.chatBox}>
                 <div className={styles.inputArea}>
-                  <input
-                    id={`filename-${bot}`}
-                    type="file"
-                    className={styles.fileUpload}
-                    onChange={(e) => handleFileChange(bot, e)}
-                  />
-                  {selectedFiles[bot] && (
-                    <button
-                      className={styles.uploadButton}
-                      onClick={(event) => handleUpload(bot, event)}
-                    >
-                      Upload
-                    </button>
+                  {bot === 1 ? (
+                    <>
+                      <button
+                        onClick={() =>
+                          document.getElementById(`filename-${bot}-1`).click()
+                        }
+                      >
+                        Choose File 1
+                      </button>
+                      <input
+                        id={`filename-${bot}-1`}
+                        type="file"
+                        className={styles.fileUpload}
+                        style={{ display: "none" }}
+                        onChange={(e) => handleFileChange(bot, e, 1)}
+                      />
+                      <button
+                        onClick={() =>
+                          document.getElementById(`filename-${bot}-2`).click()
+                        }
+                      >
+                        Choose File 2
+                      </button>
+                      <input
+                        id={`filename-${bot}-2`}
+                        type="file"
+                        className={styles.fileUpload}
+                        style={{ display: "none" }}
+                        onChange={(e) => handleFileChange(bot, e, 2)}
+                      />
+                      {selectedFiles[`${bot}-1`] && (
+                        <button
+                          className={styles.uploadButton}
+                          onClick={() => handleUpload(bot, 1)}
+                        >
+                          Upload File 1
+                        </button>
+                      )}
+                      {selectedFiles[`${bot}-2`] && (
+                        <button
+                          className={styles.uploadButton}
+                          onClick={() => handleUpload(bot, 2)}
+                        >
+                          Upload File 2
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() =>
+                          document.getElementById(`filename-${bot}-1`).click()
+                        }
+                      >
+                        Choose File
+                      </button>
+                      <input
+                        id={`filename-${bot}-1`}
+                        type="file"
+                        className={styles.fileUpload}
+                        style={{ display: "none" }}
+                        onChange={(e) => handleFileChange(bot, e, 1)}
+                      />
+                      {selectedFiles[`${bot}-1`] && (
+                        <button
+                          className={styles.uploadButton}
+                          onClick={() => handleUpload(bot, 1)}
+                        >
+                          Upload File
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
