@@ -528,6 +528,40 @@ input:checked + .slider:before {
 /* ------------------------------------------------------------------------------------------------------------- */
 /* Responsive Adjustments for Mobile Devices */
 @media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Reduce width */
+    padding: 5px;
+    position: absolute;
+    left: -210px; /* Hide off-screen */
+    transition: left 0.3s ease-in-out;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Sidebar toggle button */
+  .sidebarToggleIcon {
+    top: 15px;
+    left: 15px;
+    font-size: 18px;
+  }
+
+  /* Buttons */
+  .newChatButton {
+    padding: 8px;
+  }
+
+  .deleteButton {
+    left: 100px; /* Adjust position */
+    font-size: 14px;
+  }
+
+  /* History List */
+  .historyList {
+    max-height: 200px;
+  }
+
   .chatContainer {
     margin: 5px;
     height: auto;
@@ -594,6 +628,9 @@ input:checked + .slider:before {
     font-size: 14px;
     animation: fadeIn 0.8s ease-in-out;
   }
+  .frameHeading {
+    font-size: 1.5em;
+  }
 
   .messageList {
     margin-top: 10px;
@@ -604,6 +641,11 @@ input:checked + .slider:before {
     font-size: 14px;
     background-color: #007bff;
     border-radius: 6px;
+  }
+
+  .toggleButtonsRow {
+    flex-direction: column;
+    gap: 5px;
   }
 
   .table {
