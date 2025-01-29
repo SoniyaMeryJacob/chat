@@ -1,12 +1,10 @@
-//upload.js
 import multer from "multer";
+import path from "path";
 import { createRouter } from "next-connect";
 
-// MongoDB URI from environment variables
-const MONGO_URI = process.env.MONGO_URI;
-
+// Configure storage to save files locally in the `public/uploads` directory
 const storage = multer.diskStorage({
-  destination: "./public/uploads",
+  destination: "./public/uploads", // Ensure this folder exists
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
@@ -14,53 +12,62 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    console.log("Processing file:", file.originalname);
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed!"), false);
+    }
+  },
 });
 
-// Create the router using next-connect
+// Create API router
 const router = createRouter();
 
-// Handle file upload
+// Middleware for handling file upload
 router.use(upload.single("file"));
 
-// POST handler to upload a file
+// POST handler to upload file
 router.post(async (req, res) => {
+  console.log("File received:", req.file);
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  // Send a success response with file metadata
+  const fileUrl = `/uploads/${req.file.filename}`; // File accessible via this URL
+
   res.status(200).json({
     success: true,
-    fileId: req.file.id, // MongoDB ObjectId
-    filename: req.file.filename, // Stored filename
+    fileUrl,
+    filename: req.file.filename,
     message: "File uploaded successfully",
   });
 });
 
-// Error handler
+// Global error handler
 router.use((error, req, res, next) => {
   console.error("Error during file upload:", error.message);
   if (error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE") {
     return res.status(400).json({ error: "File size exceeds the 5MB limit." });
   } else if (error.message === "Only image files are allowed!") {
-    return res
-      .status(400)
-      .json({ error: "Invalid file type. Only image files are allowed." });
+    return res.status(400).json({ error: "Invalid file type. Only image files are allowed." });
   } else {
     return res.status(500).json({ error: `Server error: ${error.message}` });
   }
 });
 
-// Handle unsupported methods
+// Handle unsupported HTTP methods
 router.use((req, res) => {
   res.status(405).json({ error: `Method ${req.method} not allowed` });
 });
 
 export default router.handler();
 
+// Disable Next.js body parser for multer to work correctly
 export const config = {
   api: {
-    bodyParser: false, // Disable body parsing to allow multer to handle file uploads
+    bodyParser: false,
   },
 };

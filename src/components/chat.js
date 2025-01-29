@@ -80,26 +80,25 @@ export default function HomePage() {
       alert("Please select a file to upload.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("file", file);
-
+  
     try {
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
-
+  
       const result = await response.json();
-
+  
       if (result.success) {
         const fileMessage = {
-          fileId: result.fileId,
-          fileUrl: `/api/files/${result.fileId}`,
+          fileUrl: `/api/files/${result.filename}`, // Serve from local storage
           fileName: file.name,
           category: `File ${fileCategory}`,
         };
-
+  
         const updatedMessages = {
           ...messages,
           [bot]: {
@@ -108,20 +107,7 @@ export default function HomePage() {
           },
         };
         setMessages(updatedMessages);
-
-        const updatedHistory = {
-          ...chatHistory,
-          [bot]: {
-            ...(chatHistory[bot] || {}),
-            [activeChat]: [
-              ...(chatHistory[bot]?.[activeChat] || []),
-              fileMessage,
-            ],
-          },
-        };
-        setChatHistory(updatedHistory);
-
-        // Clear the file input
+  
         setSelectedFiles((prev) => ({
           ...prev,
           [fileKey]: null,
@@ -134,6 +120,7 @@ export default function HomePage() {
       alert("An error occurred during file upload.");
     }
   };
+  
 
   const handleFileChange = (bot, event, fileCategory) => {
     const file = event.target.files[0];
