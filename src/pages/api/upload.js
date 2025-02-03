@@ -1,6 +1,10 @@
+import { MongoClient } from "mongodb";
 import multer from "multer";
 import path from "path";
 import { createRouter } from "next-connect";
+
+const uri = "mongodb+srv://soniyamery22:Faith1234@cluster0.kdo8f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const client = new MongoClient(uri);
 
 // Configure storage to save files locally in the `public/uploads` directory
 const storage = multer.diskStorage({
@@ -37,14 +41,35 @@ router.post(async (req, res) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const fileUrl = `/uploads/${req.file.filename}`; // File accessible via this URL
-
-  res.status(200).json({
-    success: true,
-    fileUrl,
+  const fileData = {
     filename: req.file.filename,
-    message: "File uploaded successfully",
-  });
+    originalName: req.file.originalname,
+    fileUrl: `/uploads/${req.file.filename}`, // Local file URL
+    contentType: req.file.mimetype,
+    size: req.file.size,
+    uploadDate: new Date(),
+  };
+
+  try {
+    await client.connect();
+    const db = client.db("chatdb"); // Database
+    const collection = db.collection("chatfile"); // Collection
+
+    const result = await collection.insertOne(fileData);
+    console.log("File inserted into MongoDB:", result.insertedId);
+
+    res.status(200).json({
+      success: true,
+      fileUrl: fileData.fileUrl,
+      filename: fileData.filename,
+      message: "File uploaded successfully",
+    });
+  } catch (error) {
+    console.error("MongoDB Insert Error:", error);
+    res.status(500).json({ error: "Database error" });
+  } finally {
+    await client.close();
+  }
 });
 
 // Global error handler
