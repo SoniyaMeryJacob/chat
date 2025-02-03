@@ -14,14 +14,15 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
-    console.log("Processing file:", file.originalname);
-    if (file.mimetype.startsWith("image/")) {
+    const allowedTypes = ["image/", "application/pdf", "text/plain", "application/msword"];
+    if (allowedTypes.some(type => file.mimetype.startsWith(type))) {
       cb(null, true);
     } else {
-      cb(new Error("Only image files are allowed!"), false);
+      cb(new Error("Only images, PDFs, TXT, and DOC files are allowed!"), false);
     }
-  },
+  }
 });
+
 
 // Create API router
 const router = createRouter();
